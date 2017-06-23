@@ -18,7 +18,6 @@ class CreatePostMetasTable extends Migration
             $table->integer('post_id')->comment('post表的外键')->index();
             $table->string('meta_key', 191)->index()->comment('键');
             $table->text('meta_value')->comment('值');
-            $table->timestamps();
         });
     }
 

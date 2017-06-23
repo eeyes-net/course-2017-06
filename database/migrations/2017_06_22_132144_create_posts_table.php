@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->text('title')->comment('名称');
             $table->text('excerpt')->comment('简介');
             $table->longText('content')->comment('内容');
+            $table->integer('visit_count')->default('0')->comment('访问次数');
             $table->timestamps();
         });
     }
