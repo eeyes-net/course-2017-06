@@ -32,12 +32,12 @@ class Post extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Post::class, 'teacher_course', 'teacher_post_id', 'course_post_id');
+        return $this->belongsToMany(Post::class, 'teacher_course', 'teacher_id', 'course_id');
     }
 
     public function teachers()
     {
-        return $this->belongsToMany(Post::class, 'teacher_course', 'course_post_id', 'teacher_post_id');
+        return $this->belongsToMany(Post::class, 'teacher_course', 'course_id', 'teacher_id');
     }
 
     public function scopeOrdered($query)

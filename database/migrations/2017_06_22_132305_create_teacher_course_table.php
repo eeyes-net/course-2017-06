@@ -14,9 +14,11 @@ class CreateTeacherCourseTable extends Migration
     public function up()
     {
         Schema::create('teacher_course', function (Blueprint $table) {
-            $table->integer('teacher_post_id')->comment('教师post表的外键');
-            $table->integer('course_post_id')->comment('课程post表的外键');
-            $table->primary(['teacher_post_id', 'course_post_id']);
+            $table->integer('teacher_id')->comment('教师post表的外键');
+            $table->foreign('teacher_id')->references('id')->on('posts');
+            $table->integer('course_id')->comment('课程post表的外键');
+            $table->foreign('course_id')->references('id')->on('posts');
+            $table->primary(['teacher_id', 'course_id']);
         });
     }
 
