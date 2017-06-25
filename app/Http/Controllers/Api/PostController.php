@@ -9,8 +9,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $course = Post::where('type', 'course')->limit(2)->orderd()->get()->pluck('simple_data')->toArray();
-        $teacher = Post::where('type', 'teacher')->limit(2)->orderd()->get()->pluck('simple_data')->toArray();
+        $course = Post::where('type', 'course')->limit(2)->ordered()->get()->pluck('simple_data')->toArray();
+        $teacher = Post::where('type', 'teacher')->limit(2)->ordered()->get()->pluck('simple_data')->toArray();
         return compact('course', 'teacher');
     }
 
