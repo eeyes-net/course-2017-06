@@ -21,6 +21,6 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        return Post::search($request->get('q'))->pluck('simple_data');
+        return Post::search($request->query('q', ''))->pluck('simple_data');
     }
 }
