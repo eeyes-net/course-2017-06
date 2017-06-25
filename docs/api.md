@@ -81,3 +81,81 @@ GET /api/post/
     }
 }
 ```
+
+### 课程、教师详情页
+
+```text
+GET /api/post/{id}
+```
+
+此处id为通过其他接口获取到的id
+
+#### 教师详情页返回内容
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "id": 1,
+        "type": "teacher",
+        "title": "教师A的名称",
+        "excerpt": "教师A的简介",
+        "content": "教师A的具体介绍",
+        "visit_count": 0,
+        "department": "教师A的学院或部门",
+        "email": "教师A的E-mail",
+        "courses": [
+            {
+                "id": 2,
+                "type": "course",
+                "title": "课程A的名称",
+                "excerpt": "课程A的简介",
+                "visit_count": 0
+            },
+            {
+                "id": 3,
+                "type": "course",
+                "title": "课程B的名称",
+                "excerpt": "课程B的简介",
+                "visit_count": 0
+            }
+        ]
+    }
+}
+```
+
+#### 课程详情页返回内容
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "id": 2,
+        "type": "course",
+        "title": "课程A的名称",
+        "excerpt": "课程A的简介",
+        "content": "课程A的具体介绍",
+        "visit_count": 0,
+        "category": "课程A的大类",
+        "credit": "课程A的学分",
+        "teachers": [
+            {
+                "id": 1,
+                "type": "teacher",
+                "title": "教师A的名称",
+                "excerpt": "教师A的简介",
+                "visit_count": 0
+            },
+            {
+                "id": 4,
+                "type": "teacher",
+                "title": "教师B的名称",
+                "excerpt": "教师B的简介",
+                "visit_count": 0
+            }
+        ]
+    }
+}
+```
