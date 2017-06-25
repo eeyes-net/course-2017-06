@@ -21,4 +21,6 @@ Route::group(['prefix' => 'post', 'namespace' => 'Api'], function () {
     Route::get('/', 'PostController@index');
     Route::get('s', 'PostController@search');
     Route::get('{id}', 'PostController@show');
+    Route::get('{id}/comment', 'CommentController@index');
+    Route::post('{id}/comment', 'CommentController@store');
 });
