@@ -15,7 +15,8 @@ class CreatePostMetasTable extends Migration
     {
         Schema::create('post_metas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('post_id')->comment('post表的外键')->index();
+            $table->integer('post_id')->comment('post表的外键');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->string('meta_key', 191)->index()->comment('键');
             $table->text('meta_value')->comment('值');
         });
