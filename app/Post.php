@@ -40,6 +40,18 @@ class Post extends Model
         return $this->belongsToMany(Post::class, 'teacher_course', 'course_id', 'teacher_id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * 排序算法
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
     public function scopeOrdered($query)
     {
         return $query->orderBy('visit_count', 'desc');
