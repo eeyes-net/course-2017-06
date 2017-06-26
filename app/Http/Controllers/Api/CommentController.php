@@ -11,7 +11,7 @@ class CommentController extends Controller
 {
     public function index($id)
     {
-        return Post::find($id)->comments()->where('approved', '1')->ordered()->get();
+        return Post::find($id)->comments()->approved()->ordered()->paginate();
     }
 
     public function store(Request $request, $id)
