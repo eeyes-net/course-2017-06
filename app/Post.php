@@ -2,11 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class Post
@@ -51,7 +47,7 @@ class Post extends Model
     /**
      * 排序算法
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Query\Builder $query
      *
      * @return mixed
      */
@@ -63,7 +59,7 @@ class Post extends Model
     /**
      * 排序算法
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Query\Builder $query
      *
      * @return mixed
      */
@@ -77,7 +73,7 @@ class Post extends Model
     /**
      * 搜索
      *
-     * @param Builder $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @param string $q 查找的文字
      *
      * @return mixed
@@ -86,8 +82,7 @@ class Post extends Model
     {
         $q = sql_filter($q);
         if (empty($q)) {
-            Log::error("Empty query: $q");
-            return $query;
+            return $query->whereRaw('FALSE');
         }
         // replace '你好世界' with '%你%好%世%界%';
         $q = '%' . preg_replace('/./u', '$0%', $q);
