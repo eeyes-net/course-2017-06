@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class Post
@@ -48,13 +51,48 @@ class Post extends Model
     /**
      * 排序算法
      *
-     * @param $query
+     * @param Builder $query
      *
      * @return mixed
      */
     public function scopeOrdered($query)
     {
         return $query->orderBy('visit_count', 'desc');
+    }
+
+    /**
+     * 排序算法
+     *
+     * @param Builder $query
+     *
+     * @return mixed
+     */
+    public function scopePaginatePluckSimpleData($query)
+    {
+        $paginator = $query->paginate();
+        $paginator->setCollection($paginator->getCollection()->pluck('simple_data'));
+        return $paginator;
+    }
+
+    /**
+     * 搜索
+     *
+     * @param Builder $query
+     * @param string $q 查找的文字
+     *
+     * @return mixed
+     */
+    public function scopeSearch($query, $q)
+    {
+        $q = sql_filter($q);
+        if (empty($q)) {
+            Log::error("Empty query: $q");
+            return $query;
+        }
+        // replace '你好世界' with '%你%好%世%界%';
+        $q = '%' . preg_replace('/./u', '$0%', $q);
+        return $query->where('title', 'like', $q)
+            ->orWhere('excerpt', 'like', $q);
     }
 
     /**
@@ -180,25 +218,5 @@ class Post extends Model
             default:
                 throw new PostTypeException($this, 'course|teacher');
         }
-    }
-
-    /**
-     * 搜索
-     *
-     * @param string $q 查找的文字
-     *
-     * @return Collection
-     */
-    public static function search($q)
-    {
-        $q = sql_filter($q);
-        if (empty($q)) {
-            return new Collection();
-        }
-        // replace '你好世界' with '%你%好%世%界%';
-        $q = '%' . preg_replace('/./u', '$0%', $q);
-        return self::where('title', 'like', $q)
-            ->orWhere('excerpt', 'like', $q)
-            ->get();
     }
 }

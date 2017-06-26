@@ -17,7 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'post', 'namespace' => 'Api'], function () {
+Route::namespace('Api')->prefix('post')->group(function () {
+    Route::get('courses', 'PostController@courses');
+    Route::get('teachers', 'PostController@teachers');
     Route::get('/', 'PostController@index');
     Route::get('s', 'PostController@search');
     Route::get('{id}', 'PostController@show');

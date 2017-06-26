@@ -4,14 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index() {
+        return redirect(action('Api\PostController@courses'));
+    }
+
+    public function courses()
     {
-        $course = Post::where('type', 'course')->limit(2)->ordered()->get()->pluck('simple_data')->toArray();
-        $teacher = Post::where('type', 'teacher')->limit(2)->ordered()->get()->pluck('simple_data')->toArray();
-        return compact('course', 'teacher');
+        /** @var Paginator $courses */
+        return Post::where('type', 'course')->ordered()->paginatePluckSimpleData();
+    }
+
+    public function teachers()
+    {
+        /** @var Paginator $courses */
+        return Post::where('type', 'teacher')->ordered()->paginatePluckSimpleData();
     }
 
     public function show($id)
@@ -21,6 +31,7 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        return Post::search($request->query('q', ''))->pluck('simple_data');
+        $q = $request->query('q', '');
+        return Post::search($request->query('q', ''))->ordered()->paginatePluckSimpleData()->appends(compact('q'));
     }
 }
