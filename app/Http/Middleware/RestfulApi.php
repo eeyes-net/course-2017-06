@@ -17,6 +17,10 @@ class RestfulApi
         /** @var \Illuminate\Http\Response $response */
         $response = $next($request);
 
+        if ($response->status() !== 200) {
+            return $response;
+        }
+
         if (is_array($response->original)
             && count($response->original) === 3
             && array_key_exists('code', $response->original)
