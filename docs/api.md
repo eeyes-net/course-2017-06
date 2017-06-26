@@ -45,15 +45,18 @@
 ### 课程首页
 
 ```text
-GET /api/post/
+GET /api/post/courses?page=1
 ```
+
+* 没有page参数则默认为page=1
 
 ```json
 {
     "code": 200,
     "msg": "OK",
     "data": {
-        "course": [
+        "current_page": 1,
+        "data": [
             {
                 "id": 2,
                 "type": "course",
@@ -69,18 +72,97 @@ GET /api/post/
                 "visit_count": 0
             }
         ],
-        "teacher": [
+        "from": 1,
+        "last_page": 1,
+        "next_page_url": null,
+        "path": "http://course.dev/api/post/courses",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 2,
+        "total": 2
+    }
+}
+```
+
+### 教师首页
+
+```text
+GET /api/post/teachers?page=1
+```
+
+* 没有page参数则默认为page=1
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "current_page": 1,
+        "data": [
             {
                 "id": 1,
                 "type": "teacher",
                 "title": "教师A的名称",
                 "excerpt": "教师A的简介",
                 "visit_count": 0
+            },
+            {
+                "id": 4,
+                "type": "teacher",
+                "title": "教师B的名称",
+                "excerpt": "教师B的简介",
+                "visit_count": 0
             }
-        ]
+        ],
+        "from": 1,
+        "last_page": 1,
+        "next_page_url": null,
+        "path": "http://course.dev/api/post/teachers",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 2,
+        "total": 2
     }
 }
 ```
+
+### 通用查找页
+
+```text
+GET /api/post/s?q=课程A&page=1
+```
+
+* q参数应该经过urlencoded（例如`%E8%AF%BE%E7%A8%8BA`）
+* 没有page参数则默认为page=1
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 2,
+                "type": "course",
+                "title": "课程A的名称",
+                "excerpt": "课程A的简介",
+                "visit_count": 0
+            }
+        ],
+        "from": 1,
+        "last_page": 1,
+        "next_page_url": null,
+        "path": "http://course.dev/api/post/s",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 1
+    }
+}
+```
+
+* q为空返回空集
 
 ### 课程、教师详情页
 
@@ -88,7 +170,7 @@ GET /api/post/
 GET /api/post/{id}
 ```
 
-此处id为通过其他接口获取到的id
+* 此处id为通过其他接口获取到的id
 
 #### 教师详情页返回内容
 
@@ -157,5 +239,60 @@ GET /api/post/{id}
             }
         ]
     }
+}
+```
+
+### 查看评论
+
+```text
+GET /api/post/{id}/comment?page=1
+```
+
+* 没有page参数则默认为page=1
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 1,
+                "post_id": 1,
+                "content": "Hello, world!",
+                "created_at": "2017-06-23 17:16:56"
+            }
+        ],
+        "from": 1,
+        "last_page": 1,
+        "next_page_url": null,
+        "path": "http://course.dev/api/post/1/comment",
+        "per_page": 15,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 1
+    }
+}
+```
+
+* 仅显示已通过评论
+
+### 发布评论
+
+```text
+POST /api/post/{id}/comment
+Content-Type: application/json
+
+{
+    "content": "Hello, world!"
+}
+```
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": null
 }
 ```
