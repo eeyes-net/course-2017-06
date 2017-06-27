@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $excerpt
  * @property string $content
+ * @property string $category
  * @property int $visit_count
  *
  * @property array $metas
@@ -22,6 +23,7 @@ class Post extends Model
 {
     protected $with = [
         'metas',
+        'categories',
     ];
 
     public function metas()
@@ -42,6 +44,11 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_course', 'course_id', 'category_id');
     }
 
     /**
@@ -159,15 +166,15 @@ class Post extends Model
     {
         switch ($this->type) {
             case 'course':
-                $metas = $this->getMeta(['category', 'credit']);
+                $metas = $this->getMeta(['credit']);
                 return [
                     'id' => $this->id,
                     'type' => $this->type,
                     'title' => $this->title,
                     'excerpt' => $this->excerpt,
                     'content' => $this->content,
+                    'category' => $this->category,
                     'visit_count' => $this->visit_count,
-                    'category' => $metas['category'],
                     'credit' => $metas['credit'],
                     'teachers' => $this->teachers->pluck('simple_data'),
                 ];
@@ -201,6 +208,15 @@ class Post extends Model
     {
         switch ($this->type) {
             case 'course':
+                return [
+                    'id' => $this->id,
+                    'type' => $this->type,
+                    'title' => $this->title,
+                    'excerpt' => $this->excerpt,
+                    'categories' => $this->categories()->pluck('name'),
+                    'visit_count' => $this->visit_count,
+                ];
+                break;
             case 'teacher':
                 return [
                     'id' => $this->id,
