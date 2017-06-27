@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
-    public function index() {
-        return redirect(action('Api\PostController@courses'));
+    public function index()
+    {
+        return Post::limit(5)->ordered()->get()->pluck('simple_data');
     }
 
     public function courses()
     {
-        /** @var Paginator $courses */
-        return Post::where('type', 'course')->ordered()->paginatePluckSimpleData();
+        $result = [];
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $result[$category->name] = $category->courses()->limit(2)->ordered()->paginatePluckSimpleData();
+        }
+        return $result;
     }
 
     public function teachers()

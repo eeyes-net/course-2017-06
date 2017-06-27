@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Comment;
-use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
 
