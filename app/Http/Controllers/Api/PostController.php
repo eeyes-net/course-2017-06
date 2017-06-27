@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
@@ -26,7 +25,6 @@ class PostController extends Controller
 
     public function teachers()
     {
-        /** @var Paginator $courses */
         return Post::where('type', 'teacher')->ordered()->paginatePluckSimpleData();
     }
 
@@ -38,6 +36,6 @@ class PostController extends Controller
     public function search(Request $request)
     {
         $q = $request->query('q', '');
-        return Post::search($request->query('q', ''))->ordered()->paginatePluckSimpleData()->appends(compact('q'));
+        return Post::search($q)->ordered()->paginatePluckSimpleData()->appends(compact('q'));
     }
 }
