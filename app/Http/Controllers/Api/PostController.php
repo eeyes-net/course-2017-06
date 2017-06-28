@@ -10,17 +10,22 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::limit(5)->ordered()->get()->pluck('simple_data');
+        return Post::ordered()->paginatePluckSimpleData();
     }
 
-    public function courses()
+    public function courses_categorized()
     {
         $result = [];
         $categories = Category::all();
         foreach ($categories as $category) {
-            $result[$category->name] = $category->courses()->limit(2)->ordered()->paginatePluckSimpleData();
+            $result[$category->name] = $category->courses()->limit(2)->ordered()->get()->pluck('simple_data');
         }
         return $result;
+    }
+
+    public function courses()
+    {
+        return Post::ofType('course')->ordered()->paginatePluckSimpleData();
     }
 
     public function teachers()

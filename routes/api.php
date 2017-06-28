@@ -26,6 +26,7 @@ Route::namespace('Api')->group(function () {
     });
     Route::prefix('post')->group(function () {
         Route::get('/', 'PostController@index');
+        Route::get('courses/categorized', 'PostController@courses_categorized');
         Route::get('courses', 'PostController@courses');
         Route::get('teachers', 'PostController@teachers');
         Route::get('s', 'PostController@search');
