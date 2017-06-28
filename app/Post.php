@@ -18,6 +18,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $visit_count
  *
  * @property array $metas
+ * @property array $categories
+ * @property array $data
+ * @property array $simple_data
+ *
+ * @method \Illuminate\Database\Query\Builder ordered
+ * @method \Illuminate\Database\Query\Builder ofType
+ * @method \Illuminate\Database\Query\Builder paginatePluckSimpleData
+ * @method \Illuminate\Database\Query\Builder search
+ * @method static Post find($id)
  */
 class Post extends Model
 {
@@ -61,6 +70,19 @@ class Post extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('visit_count', 'desc');
+    }
+
+    /**
+     * 排序算法
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @param string $type 类型
+     *
+     * @return mixed
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('type', $type);
     }
 
     /**

@@ -16,14 +16,13 @@ class Category extends Model
     /**
      * 通过名称查找
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param string $name
      *
      * @return \App\Category mixed
      */
-    public function scopeFindByName($query, $name)
+    public static function findByName($name)
     {
-        return $query->where('name', $name)->first();
+        return static::where('name', $name)->first();
     }
 
     /**

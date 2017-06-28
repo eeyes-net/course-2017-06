@@ -25,7 +25,7 @@ class PostController extends Controller
 
     public function teachers()
     {
-        return Post::where('type', 'teacher')->ordered()->paginatePluckSimpleData();
+        return Post::ofType('teacher')->ordered()->paginatePluckSimpleData();
     }
 
     public function show($id)
