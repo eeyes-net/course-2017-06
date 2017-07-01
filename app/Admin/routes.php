@@ -9,8 +9,10 @@ Route::group([
     'namespace' => Admin::controllerNamespace(),
     'middleware' => ['web', 'admin'],
 ], function (Router $router) {
-
     $router->get('/', 'HomeController@index');
     $router->resource('teachers', 'TeacherController');
     $router->resource('courses', 'CourseController');
+    $router->resource('categories', 'CategoryController');
+    $router->resource('comments', 'CommentController');
+    $router->resource('feedback', 'FeedbackController');
 });
