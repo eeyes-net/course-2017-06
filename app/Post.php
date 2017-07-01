@@ -167,7 +167,7 @@ class Post extends Model
      */
     public function setMeta($name, $value)
     {
-        $post_meta = $this->metas->where('name', $name)->first();
+        $post_meta = $this->metas->where('meta_key', $name)->first();
         if (!$post_meta) {
             $post_meta = new PostMeta();
             $post_meta->meta_key = $name;
