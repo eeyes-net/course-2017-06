@@ -50,6 +50,14 @@ class CourseController extends Controller
             $grid->column('title', '课程姓名')->sortable()->editable();
             $grid->column('excerpt', '课程简介')->editable();
             $grid->column('visit_count', '访问量')->sortable();
+            $grid->column('approved_comment_count', '已通过评论数')->display(function () {
+                $post = Post::find($this->id);
+                return $post->comments()->approved()->count();
+            });
+            $grid->column('comment_count', '总评论数')->display(function () {
+                $post = Post::find($this->id);
+                return $post->comments()->count();
+            });
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->disableIdFilter();
@@ -58,6 +66,14 @@ class CourseController extends Controller
                         ->orWhere('excerpt', 'like', "%{$this->input}%")
                         ->orWhere('content', 'like', "%{$this->input}%");
                 }, '搜索');
+                $filter->where(static::filterCourseCategroy(), '专业大类')
+                    ->select(Category::all()->pluck('name', 'id'));
+            });
+
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                /** @var Post $post */
+                $post = $actions->row;
+                $actions->append('<a href="' . e(action('\App\Admin\Controllers\CommentController@index', ['post_id' => $post->id])) . '"><i class="fa fa-comment"></i></a>');
             });
         });
     }
@@ -85,5 +101,20 @@ class CourseController extends Controller
                 $form->input('metas', []); // 清空metas信息，阻止Laravel-Admin更新关联表
             });
         });
+    }
+
+    /**
+     * 获取专业大类过滤器的闭包
+     * 主要用于\Encore\Admin\Grid\Filter\Where::getQueryHash(CourseController::filterCourseCategroy())
+     *
+     * @return \Closure
+     */
+    public static function filterCourseCategroy() {
+        return function ($query) {
+            /** @var Category $category */
+            $category = Category::find($this->input);
+            $post_ids = $category->courses()->get()->pluck('id');
+            $query->whereIn('id', $post_ids);
+        };
     }
 }

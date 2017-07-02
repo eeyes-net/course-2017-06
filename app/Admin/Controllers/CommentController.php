@@ -44,6 +44,7 @@ class CommentController extends Controller
     {
         return Admin::grid(Comment::class, function (Grid $grid) {
             $grid->model()->latest();
+
             $grid->id('ID')->sortable();
             $grid->column('post_title', '评论文章')->display(function () {
                 $post = Post::find($this->post_id);
@@ -64,6 +65,11 @@ class CommentController extends Controller
                 'on' => ['text' => '已审核'],
                 'off' => ['text' => '未审核'],
             ]);
+
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->is('post_id', '文章')->select(Post::all()->pluck('title', 'id'));
+            });
         });
     }
 
@@ -71,11 +77,12 @@ class CommentController extends Controller
     {
         return Admin::form(Comment::class, function (Form $form) {
             $form->display('id', 'ID');
-            $form->display('post_title', '评论文章')->default(function (Form $form) {
-                /** @var Comment $comment */
-                $comment = $form->model();
-                return ($comment->post) ? $comment->post->title : '';
-            });
+            $form->select('post_id', '评论文章')->options(function ($id) {
+                $post = Post::find($id);
+                if ($post) {
+                    return [$post->id => $post->title];
+                }
+            })->ajax(action('\App\Admin\Controllers\Api\PostController@index'));
             $form->textarea('content', '评论内容');
             $form->switch('approved', '审核情况')->states([
                 'on' => ['text' => '已审核'],

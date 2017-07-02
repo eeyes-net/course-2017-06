@@ -15,4 +15,6 @@ Route::group([
     $router->resource('categories', 'CategoryController');
     $router->resource('comments', 'CommentController');
     $router->resource('feedback', 'FeedbackController');
+
+    $router->get('api/posts', 'Api\PostController@index');
 });

@@ -48,6 +48,14 @@ class TeacherController extends Controller
             $grid->column('title', '教师姓名')->sortable()->editable();
             $grid->column('excerpt', '教师简介')->editable();
             $grid->column('visit_count', '访问量')->sortable();
+            $grid->column('approved_comment_count', '已通过评论数')->display(function () {
+                $post = Post::find($this->id);
+                return $post->comments()->approved()->count();
+            });
+            $grid->column('comment_count', '总评论数')->display(function () {
+                $post = Post::find($this->id);
+                return $post->comments()->count();
+            });
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->disableIdFilter();
@@ -56,6 +64,12 @@ class TeacherController extends Controller
                         ->orWhere('excerpt', 'like', "%{$this->input}%")
                         ->orWhere('content', 'like', "%{$this->input}%");
                 }, '搜索');
+            });
+
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                /** @var Post $post */
+                $post = $actions->row;
+                $actions->append('<a href="' . e(action('\App\Admin\Controllers\CommentController@index', ['post_id' => $post->id])) . '"><i class="fa fa-comment"></i></a>');
             });
         });
     }

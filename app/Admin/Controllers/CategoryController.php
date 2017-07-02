@@ -3,13 +3,12 @@
 namespace App\Admin\Controllers;
 
 use App\Category;
-
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 
 class CategoryController extends Controller
 {
@@ -45,6 +44,12 @@ class CategoryController extends Controller
             $grid->id('ID')->sortable();
             $grid->column('name', '专业大类名称')->sortable()->editable();
             $grid->column('excerpt', '专业大类简介')->editable();
+
+            $grid->actions(function (Grid\Displayers\Actions $actions) {
+                /** @var Category $category */
+                $category = $actions->row;
+                $actions->append('<a href="' . e(action('\App\Admin\Controllers\CourseController@index', [Grid\Filter\Where::getQueryHash(CourseController::filterCourseCategroy()) => $category->id])) . '"><i class="fa fa-bookmark"></i></a>');
+            });
         });
     }
 
