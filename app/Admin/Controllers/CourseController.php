@@ -86,6 +86,7 @@ class CourseController extends Controller
             $form->text('excerpt', '课程简介');
             $form->textarea('content', '课程详情');
             $form->number('visit_count', '访问量');
+            $form->multipleSelect('teachers', '教师')->options(Post::ofType('teacher')->get()->pluck('title', 'id'));
             $form->multipleSelect('categories', '专业大类')->options(Category::all()->pluck('name', 'id'));
             $form->embeds('metas', '其他信息', function (Form\EmbeddedForm $form) {
                 $form->text('credit', '学分')->default(function (Form $form) {
