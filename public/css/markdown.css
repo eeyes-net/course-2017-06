@@ -1,0 +1,121 @@
+@media print {
+    *, *:before, *:after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    a, a:visited {
+        text-decoration: underline;
+    }
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+    a[href^="#"]:after, a[href^="javascript:"]:after {
+        content: "";
+    }
+    pre, blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+    thead {
+        display: table-header-group;
+    }
+    tr, img {
+        page-break-inside: avoid;
+    }
+    p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+    }
+    h2, h3 {
+        page-break-after: avoid;
+    }
+}
+html{font-size: 14px;}
+@media screen and (min-width: 321px) and (max-width: 413px) {
+    html{font-size: 16px;}
+}
+@media screen and (min-width: 414px) and (max-width: 639px) {
+    html{font-size: 17px;}
+}
+@media screen and (min-width: 640px) {
+    html{font-size: 18px;}
+}
+body {
+    margin: 0 auto;
+    padding: 0.5rem;
+    max-width: 960px;
+    color: #444;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.8;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1, h2, h3, h4 {
+    font-weight: normal;
+}
+h1, h2 {
+    border-bottom: 2px solid #f8f8f8;
+    padding-bottom: 0.2rem;
+}
+h2, h3, h4 {
+    margin: 1.5rem 0 1rem;
+}
+h5, h6 {
+    margin: 1rem 0 0.5rem;
+}
+h1 {
+    margin: 2rem 0 1.5rem;
+    font-size: 3rem;
+    text-align: center;
+}
+h2 {font-size: 2rem;}
+h3 {font-size: 1.6rem;}
+h4 {font-size: 1.4rem;}
+h5 {font-size: 1.2rem;}
+h6 {font-size: 1rem;}
+p {
+    margin: 1rem 0;
+    font-size: 1rem;
+}
+a, a:visited {
+    color: #39d;
+}
+a:hover, a:focus, a:active {
+    color: #28b;
+}
+pre, code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgba(0, 0, 0, 0.07);
+}
+pre code, code pre {
+    background-color: transparent;
+}
+code {
+    padding: 2px 0.4rem;
+    border-radius: 2px;
+}
+pre {
+    padding: 0.5rem;
+    overflow-x: auto;
+}
+blockquote {
+    margin-left: 1rem;
+    margin-right: 0;
+    padding: 0.5rem;
+    border-left: 4px solid #ccc;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+img, canvas, iframe, video, svg, select, textarea {
+    max-width: 100%;
+}
+td, th {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
+}
