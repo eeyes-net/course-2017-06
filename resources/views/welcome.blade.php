@@ -4,8 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="西安交通大学,西安交大,e瞳网,选课宝典,新生,教务处,新版培养计划,自选课,课程详情,教师详情,选修,课程考核,给分情况,考试资料,学习资料,整合资源">
+        <meta name="description" content="选课宝典是一个以评论社区为特色的，提供交大所有课程、授课老师介绍以及部分课程资料（包括课程ppt、学霸笔记、试题卷）的选课辅助工具">
 
-        <title>Laravel</title>
+        <title>选课宝典 - eeyes.net</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -79,15 +81,14 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    选课宝典
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="/docs/">Documentation</a>
+                    <a href="/admin/">Administration</a>
+                    <a href="https://github.com/eeyes-net/course-2017-06">Fork me on GitHub</a>
+                    <a href="https://www.eeyes.net">&copy;eeyes.net</a>
                 </div>
             </div>
         </div>
