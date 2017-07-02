@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $post_id post表的外键
  * @property string $content 内容
  * @property string $approved 是否批准
+ * @property Post $post 关联的Post模型
  *
  * @method \Illuminate\Database\Query\Builder ordered() 排序
  * @method \Illuminate\Database\Query\Builder approved() 已通过评论
@@ -19,7 +20,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
-    protected $hidden = ['approved', 'updated_at'];
+    protected $hidden = ['updated_at'];
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 
     /**
      * 排序算法

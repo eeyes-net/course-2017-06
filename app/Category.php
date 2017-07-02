@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Category
+ *
+ * @package App
+ *
+ * @property array $courses
+ */
 class Category extends Model
 {
     protected $hidden = ['created_at', 'updated_at'];

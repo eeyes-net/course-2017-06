@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
+        Encore\Admin\Providers\AdminServiceProvider::class,
 
         /*
          * Application Service Providers...
