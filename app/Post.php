@@ -60,6 +60,11 @@ class Post extends Model
         return $this->belongsToMany(Category::class, 'category_course', 'course_id', 'category_id');
     }
 
+    public function downloads()
+    {
+        return $this->belongsToMany(Download::class, 'course_download', 'course_id', 'download_id');
+    }
+
     /**
      * 排序算法
      *
@@ -213,6 +218,7 @@ class Post extends Model
                     'department' => $metas['department'],
                     'email' => $metas['email'],
                     'courses' => $this->courses->pluck('simple_data'),
+                    'downloads' => $this->downloads->pluck('simple_data'),
                 ];
                 break;
             default:

@@ -42,6 +42,7 @@ class InstallAdminMenu extends Command
             ['title' => '教师列表', 'icon' => 'fa-user', 'uri' => 'teachers'],
             ['title' => '课程列表', 'icon' => 'fa-bookmark', 'uri' => 'courses'],
             ['title' => '专业大类', 'icon' => 'fa-tags', 'uri' => 'categories'],
+            ['title' => '下载链接', 'icon' => 'fa-link', 'uri' => 'downloads'],
             ['title' => '所有评论', 'icon' => 'fa-comment', 'uri' => 'comments'],
             ['title' => '所有反馈', 'icon' => 'fa-retweet', 'uri' => 'feedback'],
         ];
@@ -54,6 +55,7 @@ class InstallAdminMenu extends Command
                 $menu_model->title = $menu['title'];
                 $menu_model->icon = $menu['icon'];
                 $menu_model->save();
+                $this->info("Menu {$menu['title']} added ok");
             }
         }
     }

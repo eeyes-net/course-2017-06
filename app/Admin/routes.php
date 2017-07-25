@@ -13,6 +13,7 @@ Route::group([
     $router->resource('teachers', 'TeacherController');
     $router->resource('courses', 'CourseController');
     $router->resource('categories', 'CategoryController');
+    $router->resource('downloads', 'DownloadController');
     $router->resource('comments', 'CommentController');
     $router->resource('feedback', 'FeedbackController');
 

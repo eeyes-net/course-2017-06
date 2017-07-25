@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Category;
+use App\Download;
 use App\Post;
 
 use Encore\Admin\Form;
@@ -88,6 +89,7 @@ class CourseController extends Controller
             $form->number('visit_count', '访问量');
             $form->multipleSelect('teachers', '教师')->options(Post::ofType('teacher')->get()->pluck('title', 'id'));
             $form->multipleSelect('categories', '专业大类')->options(Category::all()->pluck('name', 'id'));
+            $form->multipleSelect('downloads', '下载链接')->options(Download::all()->pluck('title', 'id'));
             $form->embeds('metas', '其他信息', function (Form\EmbeddedForm $form) {
                 $form->text('credit', '学分')->default(function (Form $form) {
                     /** @var Post $post */
