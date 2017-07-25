@@ -10,58 +10,81 @@ GET {{host}}/post/courses/categorized
 {
     "code": 200,
     "msg": "OK",
-    "data": {
-        "工科一": [
-            {
-                "id": 3,
-                "type": "course",
-                "title": "课程B的名称",
-                "excerpt": "课程B的简介",
-                "categories": [
-                    "工科一",
-                    "理科"
-                ],
-                "visit_count": 8
-            }
-        ],
-        "工科二": [
-            {
-                "id": 2,
-                "type": "course",
-                "title": "课程A的名称",
-                "excerpt": "课程A的简介",
-                "categories": [
-                    "工科二",
-                    "理科"
-                ],
-                "visit_count": 7
-            }
-        ],
-        "理科": [
-            {
-                "id": 3,
-                "type": "course",
-                "title": "课程B的名称",
-                "excerpt": "课程B的简介",
-                "categories": [
-                    "工科一",
-                    "理科"
-                ],
-                "visit_count": 8
-            },
-            {
-                "id": 2,
-                "type": "course",
-                "title": "课程A的名称",
-                "excerpt": "课程A的简介",
-                "categories": [
-                    "工科二",
-                    "理科"
-                ],
-                "visit_count": 7
-            }
-        ]
-    }
+    "data": [
+        {
+            "name": "工科一",
+            "data": [
+                {
+                    "id": 2,
+                    "type": "course",
+                    "title": "课程A的名称",
+                    "excerpt": "课程A的简介",
+                    "categories": [
+                        "工科一",
+                        "工科二",
+                        "理科"
+                    ],
+                    "visit_count": 10
+                },
+                {
+                    "id": 3,
+                    "type": "course",
+                    "title": "课程B的名称",
+                    "excerpt": "课程B的简介",
+                    "categories": [
+                        "工科一",
+                        "理科"
+                    ],
+                    "visit_count": 8
+                }
+            ]
+        },
+        {
+            "name": "工科二",
+            "data": [
+                {
+                    "id": 2,
+                    "type": "course",
+                    "title": "课程A的名称",
+                    "excerpt": "课程A的简介",
+                    "categories": [
+                        "工科一",
+                        "工科二",
+                        "理科"
+                    ],
+                    "visit_count": 10
+                }
+            ]
+        },
+        {
+            "name": "理科",
+            "data": [
+                {
+                    "id": 2,
+                    "type": "course",
+                    "title": "课程A的名称",
+                    "excerpt": "课程A的简介",
+                    "categories": [
+                        "工科一",
+                        "工科二",
+                        "理科"
+                    ],
+                    "visit_count": 10
+                },
+                {
+                    "id": 3,
+                    "type": "course",
+                    "title": "课程B的名称",
+                    "excerpt": "课程B的简介",
+                    "categories": [
+                        "工科一",
+                        "理科"
+                    ],
+                    "visit_count": 8
+                }
+            ]
+        }
+    ]
 }
 ```
 

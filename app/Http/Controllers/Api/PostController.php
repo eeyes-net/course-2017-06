@@ -18,7 +18,10 @@ class PostController extends Controller
         $result = [];
         $categories = Category::all();
         foreach ($categories as $category) {
-            $result[$category->name] = $category->courses()->limit(2)->ordered()->get()->pluck('simple_data');
+            $result[] = [
+                'name' => $category->name,
+                'data' => $category->courses()->limit(2)->ordered()->get()->pluck('simple_data'),
+            ];
         }
         return $result;
     }
