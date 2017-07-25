@@ -84,6 +84,7 @@ class TeacherController extends Controller
             $form->textarea('content', '教师详情');
             $form->number('visit_count', '访问量');
             $form->multipleSelect('courses', '课程')->options(Post::ofType('course')->get()->pluck('title', 'id'));
+            $form->image('avatar', '头像');
             $form->embeds('metas', '其他信息', function (Form\EmbeddedForm $form) {
                 $form->text('department', '学院/部门')->default(function (Form $form) {
                     /** @var Post $post */

@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property array $categories
  * @property array $data
  * @property array $simple_data
+ * @property string $avatar
+ * @property string $avatar_url
  *
  * @method \Illuminate\Database\Query\Builder ordered
  * @method \Illuminate\Database\Query\Builder ofType
@@ -34,6 +36,8 @@ class Post extends Model
         'metas',
         'categories',
     ];
+    protected $hidden = ['metas'];
+    protected $appends = ['avatar'];
 
     public function metas()
     {
@@ -218,6 +222,7 @@ class Post extends Model
                     'department' => $metas['department'],
                     'email' => $metas['email'],
                     'courses' => $this->courses->pluck('simple_data'),
+                    'avatar' => $this->avatar_url,
                     'downloads' => $this->downloads->pluck('simple_data'),
                 ];
                 break;
@@ -257,5 +262,20 @@ class Post extends Model
             default:
                 throw new PostTypeException($this, 'course|teacher');
         }
+    }
+
+    public function getAvatarAttribute()
+    {
+        return $this->getMeta('avatar', '');
+    }
+
+    public function setAvatarAttribute($value)
+    {
+        $this->setMeta('avatar', $value);
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return config('filesystems.disks.admin.url') . '/' . $this->avatar;
     }
 }
