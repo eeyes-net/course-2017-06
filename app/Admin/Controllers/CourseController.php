@@ -87,22 +87,10 @@ class CourseController extends Controller
             $form->text('excerpt', '课程简介');
             $form->textarea('content', '课程详情');
             $form->number('visit_count', '访问量');
+            $form->text('credit', '学分');
             $form->multipleSelect('teachers', '教师')->options(Post::ofType('teacher')->get()->pluck('title', 'id'));
             $form->multipleSelect('categories', '专业大类')->options(Category::all()->pluck('name', 'id'));
             $form->multipleSelect('downloads', '下载链接')->options(Download::all()->pluck('title', 'id'));
-            $form->embeds('metas', '其他信息', function (Form\EmbeddedForm $form) {
-                $form->text('credit', '学分')->default(function (Form $form) {
-                    /** @var Post $post */
-                    $post = $form->model();
-                    return $post->getMeta('credit', '');
-                });
-            });
-            $form->saving(function (Form $form) {
-                /** @var Post $post */
-                $post = $form->model();
-                $post->setMeta('credit', $form->input('metas.credit') ?: '');
-                $form->input('metas', []); // 清空metas信息，阻止Laravel-Admin更新关联表
-            });
         });
     }
 

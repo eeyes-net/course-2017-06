@@ -9,20 +9,25 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  *
- * @property int $id
- * @property string $type
- * @property string $title
- * @property string $excerpt
- * @property string $content
- * @property string $category
- * @property int $visit_count
+ * @property int $id ID
+ * @property string $type 文章类型
+ * @property string $title 文章标题
+ * @property string $excerpt 文章简介
+ * @property string $content 文章内容
+ * @property int $visit_count 访问量
  *
- * @property array $metas
- * @property array $categories
- * @property array $data
- * @property array $simple_data
- * @property string $avatar
- * @property string $avatar_url
+ * @property \Illuminate\Database\Eloquent\Collection $metas
+ * @property \Illuminate\Database\Eloquent\Collection $categories
+ * @property \Illuminate\Database\Eloquent\Collection $data
+ * @property \Illuminate\Database\Eloquent\Collection $simple_data
+ * @property \Illuminate\Database\Eloquent\Collection $courses
+ * @property \Illuminate\Database\Eloquent\Collection $teachers
+ * @property \Illuminate\Database\Eloquent\Collection $downloads
+ * @property string $credit 课程学分
+ * @property string $avatar 教师头像（数据库中的值）
+ * @property string $avatar_url 教师头像（完整链接）
+ * @property string $email 教师邮箱
+ * @property string $department 教师的学院或部门
  *
  * @method \Illuminate\Database\Query\Builder ordered
  * @method \Illuminate\Database\Query\Builder ofType
@@ -37,7 +42,12 @@ class Post extends Model
         'categories',
     ];
     protected $hidden = ['metas'];
-    protected $appends = ['avatar'];
+    protected $appends = [
+        'credit',
+        'avatar',
+        'email',
+        'department'
+    ];
 
     public function metas()
     {
@@ -197,16 +207,15 @@ class Post extends Model
     {
         switch ($this->type) {
             case 'course':
-                $metas = $this->getMeta(['credit']);
                 return [
                     'id' => $this->id,
                     'type' => $this->type,
                     'title' => $this->title,
                     'excerpt' => $this->excerpt,
                     'content' => $this->content,
-                    'category' => $this->category,
+                    'categories' => $this->categories->pluck('name'),
                     'visit_count' => $this->visit_count,
-                    'credit' => $metas['credit'],
+                    'credit' => $this->credit,
                     'teachers' => $this->teachers->pluck('simple_data'),
                 ];
                 break;
@@ -219,8 +228,8 @@ class Post extends Model
                     'excerpt' => $this->excerpt,
                     'content' => $this->content,
                     'visit_count' => $this->visit_count,
-                    'department' => $metas['department'],
-                    'email' => $metas['email'],
+                    'department' => $this->department,
+                    'email' => $this->email,
                     'courses' => $this->courses->pluck('simple_data'),
                     'avatar' => $this->avatar_url,
                     'downloads' => $this->downloads->pluck('simple_data'),
@@ -246,7 +255,7 @@ class Post extends Model
                     'type' => $this->type,
                     'title' => $this->title,
                     'excerpt' => $this->excerpt,
-                    'categories' => $this->categories()->pluck('name'),
+                    'categories' => $this->categories->pluck('name'),
                     'visit_count' => $this->visit_count,
                 ];
                 break;
@@ -271,11 +280,53 @@ class Post extends Model
 
     public function setAvatarAttribute($value)
     {
+        if ($this->type !== 'teacher') {
+            throw new PostTypeException($this, 'teacher');
+        }
         $this->setMeta('avatar', $value);
     }
 
     public function getAvatarUrlAttribute()
     {
         return config('filesystems.disks.admin.url') . '/' . $this->avatar;
+    }
+
+    public function getCreditAttribute()
+    {
+        return $this->getMeta('credit', '');
+    }
+
+    public function setCreditAttribute($value)
+    {
+        if ($this->type !== 'course') {
+            throw new PostTypeException($this, 'course');
+        }
+        $this->setMeta('credit', $value);
+    }
+
+    public function getDepartmentAttribute()
+    {
+        return $this->getMeta('department', '');
+    }
+
+    public function setDepartmentAttribute($value)
+    {
+        if ($this->type !== 'teacher') {
+            throw new PostTypeException($this, 'teacher');
+        }
+        $this->setMeta('department', $value);
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->getMeta('email', '');
+    }
+
+    public function setEmailAttribute($value)
+    {
+        if ($this->type !== 'teacher') {
+            throw new PostTypeException($this, 'teacher');
+        }
+        $this->setMeta('email', $value);
     }
 }

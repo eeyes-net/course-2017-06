@@ -83,27 +83,10 @@ class TeacherController extends Controller
             $form->text('excerpt', '教师简介');
             $form->textarea('content', '教师详情');
             $form->number('visit_count', '访问量');
-            $form->multipleSelect('courses', '课程')->options(Post::ofType('course')->get()->pluck('title', 'id'));
             $form->image('avatar', '头像');
-            $form->embeds('metas', '其他信息', function (Form\EmbeddedForm $form) {
-                $form->text('department', '学院/部门')->default(function (Form $form) {
-                    /** @var Post $post */
-                    $post = $form->model();
-                    return $post->getMeta('department', '');
-                });
-                $form->text('email', '邮箱')->default(function (Form $form) {
-                    /** @var Post $post */
-                    $post = $form->model();
-                    return $post->getMeta('email', '');
-                });
-            });
-            $form->saving(function (Form $form) {
-                /** @var Post $post */
-                $post = $form->model();
-                $post->setMeta('department', $form->input('metas.department') ?: '');
-                $post->setMeta('email', $form->input('metas.email') ?: '');
-                $form->input('metas', []); // 清空metas信息，阻止Laravel-Admin更新关联表
-            });
+            $form->text('department', '学院/部门');
+            $form->text('email', '邮箱');
+            $form->multipleSelect('courses', '课程')->options(Post::ofType('course')->get()->pluck('title', 'id'));
         });
     }
 }
