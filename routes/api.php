@@ -34,5 +34,6 @@ Route::namespace('Api')->group(function () {
         Route::get('{id}/comment', 'CommentController@index');
         Route::post('{id}/comment', 'CommentController@store');
     });
+    Route::post('comment/{id}/like', 'CommentController@like');
     Route::post('feedback', 'FeedbackController@store');
 });

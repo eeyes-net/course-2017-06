@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Comment;
+use App\CommentLike;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,13 @@ class CommentController extends Controller
         $comment = new Comment();
         $comment->content = $content;
         Post::find($id)->comments()->save($comment);
+        return null;
+    }
+
+    public function like($id)
+    {
+        $like = new CommentLike();
+        Comment::find($id)->likes()->save($like);
         return null;
     }
 }

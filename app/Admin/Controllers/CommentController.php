@@ -65,6 +65,7 @@ class CommentController extends Controller
                 'on' => ['text' => '已审核'],
                 'off' => ['text' => '未审核'],
             ]);
+            $grid->column('likes_count', '点赞数');
 
             $grid->filter(function ($filter) {
                 $filter->disableIdFilter();
