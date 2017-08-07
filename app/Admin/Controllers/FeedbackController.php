@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Comment;
+use App\Feedback;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
@@ -40,7 +40,7 @@ class FeedbackController extends Controller
 
     protected function grid()
     {
-        return Admin::grid(Comment::class, function (Grid $grid) {
+        return Admin::grid(Feedback::class, function (Grid $grid) {
             $grid->model()->latest();
             $grid->id('ID')->sortable();
             $grid->column('content', '反馈内容');
@@ -50,7 +50,7 @@ class FeedbackController extends Controller
 
     protected function form()
     {
-        return Admin::form(Comment::class, function (Form $form) {
+        return Admin::form(Feedback::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->textarea('content', '反馈内容');
         });
