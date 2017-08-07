@@ -91,7 +91,8 @@ GET {{host}}/post/{{post_id}}/comment?page={{page}}
                 "id": 1,
                 "post_id": 1,
                 "content": "Hello, world!",
-                "created_at": "2017-06-23 17:16:56"
+                "created_at": "2017-06-23 17:16:56",
+                "likes_count": 2
             }
         ],
         "from": 1,
@@ -115,6 +116,20 @@ Content-Type: application/json
 {
     "content": "Hello, world!"
 }
+```
+
+```json
+{
+    "code": 200,
+    "msg": "OK",
+    "data": null
+}
+```
+
+## 评论点赞
+
+```text
+POST {{host}}/comment/{{comment_id}}/like
 ```
 
 ```json
