@@ -217,6 +217,7 @@ class Post extends Model
                     'visit_count' => $this->visit_count,
                     'credit' => $this->credit,
                     'teachers' => $this->teachers->pluck('simple_data'),
+                    'downloads' => $this->downloads->pluck('simple_data'),
                 ];
                 break;
             case 'teacher':
@@ -232,7 +233,6 @@ class Post extends Model
                     'email' => $this->email,
                     'courses' => $this->courses->pluck('simple_data'),
                     'avatar' => $this->avatar_url,
-                    'downloads' => $this->downloads->pluck('simple_data'),
                 ];
                 break;
             default:
