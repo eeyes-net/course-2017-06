@@ -6,6 +6,10 @@ use App\Category;
 
 class CategoryController extends Controller
 {
+    use PostControllerTrait;
+
+    protected $model = Category::class;
+
     public function index()
     {
         return Category::all()->pluck('simple_data');
@@ -18,15 +22,23 @@ class CategoryController extends Controller
 
     public function courses($name)
     {
-        if (!is_string($name)) {
-            abort(400);
-            return;
-        }
         $category = Category::findByName($name);
         if (!$category) {
-            abort(404);
-            return;
+            return null;
         }
         return $category->courses()->ordered()->paginatePluckSimpleData();
+    }
+
+    public function courseIndex()
+    {
+        $result = [];
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $result[] = [
+                'name' => $category->name,
+                'data' => $category->courses()->limit(2)->ordered()->get()->pluck('simple_data'),
+            ];
+        }
+        return $result;
     }
 }

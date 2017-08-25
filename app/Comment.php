@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Comment
  *
- * @property int $id
- * @property string $post_id post表的外键
+ * @property int $id ID
  * @property string $content 内容
  * @property string $approved 是否批准
- * @property Post $post 关联的Post模型
+ * @property string $created_at 创建时间
+ * @property string $updated_at 修改时间（无用）
+ * @property int $commentable_id 关联的Commentable模型ID
+ * @property string $commentable_type 关联的Commentable模型类名
+ *
+ * @property \App\PostTrait $commentable 关联的Commentable模型
  * @property CommentLike $likes 关联的CommentLike模型
  * @property int $likes_count 点赞数
  *
@@ -22,14 +26,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Model
 {
-    protected $hidden = ['updated_at'];
+    protected $hidden = [
+        'approved',
+        'updated_at',
+        'commentable_id',
+        'commentable_type',
+    ];
     protected $appends = [
         'likes_count'
     ];
 
-    public function post()
+    public function commentable()
     {
-        return $this->belongsTo(Post::class);
+        return $this->morphTo();
     }
 
     public function likes()

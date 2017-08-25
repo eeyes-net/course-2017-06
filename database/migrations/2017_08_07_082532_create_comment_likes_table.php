@@ -15,7 +15,7 @@ class CreateCommentLikesTable extends Migration
     {
         Schema::create('comment_likes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('comment_id')->comment('comment表的外键');
+            $table->integer('comment_id')->unsigned();
             $table->foreign('comment_id')->references('id')->on('comments');
             $table->timestamps();
         });

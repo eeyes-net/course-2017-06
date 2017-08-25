@@ -19,21 +19,30 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::namespace('Api')->group(function () {
+    Route::get('s', 'SearchController@search');
+    Route::post('feedback', 'FeedbackController@store');
     Route::prefix('category')->group(function () {
         Route::get('/', 'CategoryController@index');
+        Route::get('course', 'CategoryController@courseIndex');
+        Route::get('s', 'TeacherController@search');
         Route::get('{name}', 'CategoryController@show');
         Route::get('{name}/courses', 'CategoryController@courses');
     });
-    Route::prefix('post')->group(function () {
-        Route::get('/', 'PostController@index');
-        Route::get('courses/categorized', 'PostController@courses_categorized');
-        Route::get('courses', 'PostController@courses');
-        Route::get('teachers', 'PostController@teachers');
-        Route::get('s', 'PostController@search');
-        Route::get('{id}', 'PostController@show');
-        Route::get('{id}/comment', 'CommentController@index');
-        Route::post('{id}/comment', 'CommentController@store');
+    Route::prefix('course')->group(function () {
+        Route::get('/', 'CourseController@index');
+        Route::get('s', 'CourseController@search');
+        Route::get('{id}', 'CourseController@show');
+        Route::get('{id}/comment', 'CourseController@comment');
+        Route::post('{id}/comment', 'CourseController@commentStore');
     });
-    Route::post('comment/{id}/like', 'CommentController@like');
-    Route::post('feedback', 'FeedbackController@store');
+    Route::prefix('teacher')->group(function () {
+        Route::get('/', 'TeacherController@index');
+        Route::get('s', 'TeacherController@search');
+        Route::get('{id}', 'TeacherController@show');
+        Route::get('{id}/comment', 'TeacherController@comment');
+        Route::post('{id}/comment', 'TeacherController@commentStore');
+    });
+    Route::prefix('comment')->group(function () {
+        Route::post('{id}/like', 'CommentController@like');
+    });
 });

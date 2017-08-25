@@ -13,11 +13,25 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Category extends Model
 {
-    protected $hidden = ['created_at', 'updated_at'];
+    use PostTrait;
+
+    protected $searchFields = [
+        'name',
+        'excerpt',
+        'content',
+    ];
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+    protected $simpleDataFields = [
+        'id',
+        'name',
+    ];
 
     public function courses()
     {
-        return $this->belongsToMany(Post::class, 'category_course', 'category_id', 'course_id');
+        return $this->belongsToMany(Course::class);
     }
 
     /**
@@ -30,20 +44,5 @@ class Category extends Model
     public static function findByName($name)
     {
         return static::where('name', $name)->first();
-    }
-
-    /**
-     * 获取简略信息
-     *
-     * @return array
-     * @throws PostTypeException
-     */
-    public function getSimpleDataAttribute()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'excerpt' => $this->excerpt,
-        ];
     }
 }

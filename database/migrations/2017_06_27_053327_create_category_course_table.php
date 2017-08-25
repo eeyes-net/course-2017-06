@@ -14,9 +14,9 @@ class CreateCategoryCourseTable extends Migration
     public function up()
     {
         Schema::create('category_course', function (Blueprint $table) {
-            $table->integer('category_id')->comment('专业大类category表的外键');
+            $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('course_id')->comment('课程post表的外键');
+            $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('posts');
             $table->primary(['category_id', 'course_id']);
         });

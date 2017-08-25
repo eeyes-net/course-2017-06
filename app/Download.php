@@ -17,18 +17,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Download extends Model
 {
-    protected $hidden = ['created_at', 'updated_at'];
+    use PostTrait;
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+    protected $simpleDataFields = [
+        'title',
+        'url',
+    ];
 
     public function courses()
     {
-        return $this->belongsToMany(Post::class, 'course_download', 'download_id', 'course_id');
-    }
-
-    public function getSimpleDataAttribute()
-    {
-        return [
-            'title' => $this->title,
-            'url' => $this->url,
-        ];
+        return $this->belongsToMany(Post::class);
     }
 }
