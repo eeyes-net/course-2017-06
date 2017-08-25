@@ -1,10 +1,38 @@
 # 教师
 
-## 教师列表（教师首页）
+返回格式和[课程](course.md)相同，省略
+
+## 列表
 
 ```text
-GET {{host}}/post/teachers?page={{page}}
+GET {{host}}/teacher?page={{page}} 
 ```
 
-* 没有page参数则默认为page=1
-* 返回数据格式全部文章
+## 查找
+
+```text
+GET {{host}}/teacher/s?q={{search_query}}&page={{page}} 
+```
+
+## 详情
+
+```text
+GET {{host}}/teacher/{{teacher_id}} 
+```
+
+## 评论列表
+
+```text
+GET {{host}}/teacher/{{teacher_id}}/comment?page={{page}} 
+```
+
+## <a id="post_comment"></a>发表评论
+
+```text
+POST {{host}}/teacher/{{cousre_id}}/comment 
+Content-Type: application/json
+
+{
+    "content": "Hello, world!"
+}
+```

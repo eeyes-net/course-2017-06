@@ -12,7 +12,9 @@
 
 ### 数据提交格式
 
-使用json格式提交数据，header部分要有`Content-Type: application/json`
+GET方法使用`application/x-www-form-urlencoded`格式，但因为是URL中默认格式，Header中不需要其他参数
+
+POST方法使用json格式提交数据，header部分要有`Content-Type: application/json`
 
 ### 数据返回格式
 
@@ -44,28 +46,48 @@
 
 ## API
 
-### [课程、教师通用](post.md)
+### [课程](course.md)
 
-* 全部文章
-* 查找文章
-* 文章内容页
-* 文章评论
-    * 查看评论
-    * 发表评论
+* [课程首页（每个专业大类显示两个课程）](category.md#categorized_courses)
+* 列表
+* 查找
+* 详情
+* 评论列表
+* 发表评论
 
 ### [教师](teacher.md)
 
-* 教师列表（教师首页）
+* 列表
+* 查找
+* 详情
+* 分类内课程列表
+* 评论列表
+* 发表评论
 
-### [课程](course.md)
+### [课程分类](category.md)
 
-* 课程首页（每个专业大类显示两个课程）
-* 课程列表
-* 某专业大类课程列表
-* 专业大类
-    * 专业大类列表
-    * 专业大类详情
+* 课程首页（每个分类显示两个课程）
+* 列表
+* 查找
+* 详情
+* 分类内课程列表
+* ~~评论列表~~
+* ~~发表评论~~
+
+### [评论](comment.md)
+
+* 发表评论
+    * [课程](course.md#post_comment)
+    * [教师](teacher.md#post_comment)
+    * ~~课程分类~~
+    * ~~子评论~~
+    * ~~下载~~
+* 点赞
+
+### [反馈](feedback.md)
+
+* 发送反馈
 
 ### [其他](other.md)
 
-* 发送反馈
+* 全局查找
