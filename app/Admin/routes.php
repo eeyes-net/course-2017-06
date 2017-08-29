@@ -16,6 +16,4 @@ Route::group([
     $router->resource('download', 'DownloadController');
     $router->resource('comment', 'CommentController');
     $router->resource('feedback', 'FeedbackController');
-
-    $router->get('api/posts', 'Api\PostController@index');
 });
