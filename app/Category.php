@@ -9,7 +9,16 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  *
- * @property array $courses
+ * @property int $id ID
+ * @property string $name 名称
+ * @property string $excerpt 简介
+ * @property string $content 内容
+ * @property string $created_at 创建时间
+ * @property string $updated_at 修改时间
+ *
+ * @property \Illuminate\Database\Eloquent\Collection $coursesRelation
+ *
+ * @property int $course_count 课程数量
  */
 class Category extends Model
 {
@@ -29,9 +38,14 @@ class Category extends Model
         'name',
     ];
 
-    public function courses()
+    public function coursesRelation()
     {
         return $this->belongsToMany(Course::class);
+    }
+
+    public function getCourseCountAttribute()
+    {
+        return $this->coursesRelation()->count();
     }
 
     /**

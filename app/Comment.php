@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Comment
  *
+ * @package App
+ *
  * @property int $id ID
  * @property string $content 内容
  * @property string $approved 是否批准
@@ -15,14 +17,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $commentable_id 关联的Commentable模型ID
  * @property string $commentable_type 关联的Commentable模型类名
  *
- * @property \App\PostTrait $commentable 关联的Commentable模型
- * @property CommentLike $likes 关联的CommentLike模型
- * @property int $likes_count 点赞数
+ * @property CommentLike $coursesRelation
+ * @property \App\PostTrait $commentable
+ *
+ * @property int $like_count 点赞数
+ * @property string $commentable_type_str 关联的Commentable模型类中文名
  *
  * @method \Illuminate\Database\Query\Builder ordered() 排序
  * @method \Illuminate\Database\Query\Builder approved() 已通过评论
- *
- * @package App
  */
 class Comment extends Model
 {
@@ -33,7 +35,7 @@ class Comment extends Model
         'commentable_type',
     ];
     protected $appends = [
-        'likes_count'
+        'like_count'
     ];
 
     public function commentable()
@@ -41,7 +43,7 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function likes()
+    public function likesRelation()
     {
         return $this->hasMany(CommentLike::class);
     }
@@ -55,7 +57,7 @@ class Comment extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query; // TODO
+        return $query->latest(); // TODO
     }
 
     /**
@@ -70,8 +72,26 @@ class Comment extends Model
         return $query->where('approved', '1');
     }
 
-    public function getLikesCountAttribute()
+    public function getLikeCountAttribute()
     {
-        return $this->likes()->count();
+        return $this->likesRelation()->count();
+    }
+
+    public function getCommentableTypeStrAttribute()
+    {
+        switch ($this->commentable_type) {
+            case Course::class:
+                return '课程';
+            case Teacher::class:
+                return '教师';
+            case Download::class:
+                return '下载链接';
+            case Category::class:
+                return '课程分类';
+            default:
+                return class_basename($this->commentable_type);
+        }
+
+        return $this->likesRelation()->count();
     }
 }

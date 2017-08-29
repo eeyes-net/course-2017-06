@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
  * @package App
  *
  * @property int $id ID
- * @property string $title 文章标题
- * @property string $excerpt 文章简介
- * @property string $content 文章内容
+ * @property string $title 名称
+ * @property string $excerpt 简介
+ * @property string $content 内容
  * @property int $visit_count 访问量
  * @property string $created_at 创建时间
  * @property string $updated_at 修改时间
@@ -25,17 +25,24 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $assessment_method 考核方式
  * @property string $feature 特色
  *
- * @property \Illuminate\Support\Collection $teachers
- * @property \Illuminate\Support\Collection $categories
- * @property \Illuminate\Support\Collection $downloads
- * @property \Illuminate\Support\Collection $simple_data
+ * @property \Illuminate\Database\Eloquent\Collection $teachersRelation
+ * @property \Illuminate\Database\Eloquent\Collection $categoriesRelation
+ * @property \Illuminate\Database\Eloquent\Collection $downloadsRelation
+ *
+ * @property \Illuminate\Support\Collection $teachers 本课程的教师简要信息
+ * @property \Illuminate\Support\Collection $categories 本课程的课程分类简要信息
+ * @property \Illuminate\Support\Collection $downloads 本课程的下载链接简要信息
+ * @property \Illuminate\Support\Collection $simple_data 简要信息
  */
 class Course extends Model
 {
     use PostTrait;
 
     protected $with = [
-        'categories',
+        'categoriesRelation',
+    ];
+    protected $hidden = [
+        'categoriesRelation'
     ];
     protected $appends = [
         'teachers',
@@ -50,33 +57,33 @@ class Course extends Model
         'visit_count',
     ];
 
-    public function teachers()
+    public function teachersRelation()
     {
         return $this->belongsToMany(Teacher::class);
     }
 
-    public function categories()
+    public function categoriesRelation()
     {
         return $this->belongsToMany(Category::class);
     }
 
-    public function downloads()
+    public function downloadsRelation()
     {
         return $this->belongsToMany(Download::class);
     }
 
     public function getTeachersAttribute()
     {
-        return $this->teachers()->get()->pluck('simple_data');
+        return $this->teachersRelation()->get()->pluck('simple_data');
     }
 
     public function getCategoriesAttribute()
     {
-        return $this->categories()->get()->pluck('simple_data');
+        return $this->categoriesRelation()->get()->pluck('simple_data');
     }
 
     public function getDownloadsAttribute()
     {
-        return $this->downloads()->get()->pluck('simple_data');
+        return $this->downloadsRelation()->get()->pluck('simple_data');
     }
 }

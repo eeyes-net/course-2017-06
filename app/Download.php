@@ -27,9 +27,4 @@ class Download extends Model
         'title',
         'url',
     ];
-
-    public function courses()
-    {
-        return $this->belongsToMany(Post::class);
-    }
 }

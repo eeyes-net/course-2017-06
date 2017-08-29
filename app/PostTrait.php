@@ -9,7 +9,7 @@ namespace App;
  *
  * @property array $simpleDataFields
  *
- * @property \Illuminate\Database\Eloquent\Collection $comments
+ * @property \Illuminate\Database\Eloquent\Collection $commentsRelation
  *
  * @method \Illuminate\Database\Query\Builder ordered 排序算法
  * @method \Illuminate\Database\Query\Builder paginatePluckSimpleData 简单数据分页
@@ -17,7 +17,7 @@ namespace App;
  */
 trait PostTrait
 {
-    public function comments()
+    public function commentsRelation()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
@@ -58,23 +58,7 @@ trait PostTrait
      */
     public function scopeSearch($query, $q)
     {
-        $q = sql_filter($q);
-        if (empty($q)) {
-            return $query->whereRaw('FALSE');
-        }
-        // replace '你好世界' with '%你%好%世%界%';
-        $q = '%' . preg_replace('/./u', '$0%', $q);
-        if (!isset($this->searchFields)) {
-            $this->searchFields = [
-                'title',
-                'excerpt',
-                'content',
-            ];
-        }
-        foreach ($this->searchFields as $field) {
-            $query->orWhere($field, 'like', $q);
-        }
-        return $query;
+        return query_search($query, $q, $this->searchFields);
     }
 
     public function getSimpleDataAttribute()
@@ -90,14 +74,13 @@ trait PostTrait
         return $result;
     }
 
-    /**
-     * Convert the model instance to an array.
-     * Override
-     *
-     * @return array
-     */
-    public function toArray()
+    public function getCommentCountAttribute()
     {
-        return $this->attributesToArray() + $this->relationsToArray();
+        return $this->commentsRelation()->count();
+    }
+
+    public function getApprovedCommentCountAttribute()
+    {
+        return $this->commentsRelation()->approved()->count();
     }
 }
