@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Category;
+use App\Course;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('专业大类');
+            $content->header('课程分类');
             $content->body($this->grid());
         });
     }
@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         return Admin::content(function (Content $content) use ($id) {
-            $content->header('编辑专业大类');
+            $content->header('编辑课程分类');
             $content->body($this->form()->edit($id));
         });
     }
@@ -33,7 +33,7 @@ class CategoryController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-            $content->header('创建专业大类');
+            $content->header('创建课程分类');
             $content->body($this->form());
         });
     }
@@ -41,14 +41,18 @@ class CategoryController extends Controller
     protected function grid()
     {
         return Admin::grid(Category::class, function (Grid $grid) {
-            $grid->id('ID')->sortable();
-            $grid->column('name', '专业大类名称')->sortable()->editable();
-            $grid->column('excerpt', '专业大类简介')->editable();
+            $grid->column('id', 'ID')->sortable();
 
-            $grid->actions(function (Grid\Displayers\Actions $actions) {
-                /** @var Category $category */
-                $category = $actions->row;
-                $actions->append('<a href="' . e(action('\App\Admin\Controllers\CourseController@index', [Grid\Filter\Where::getQueryHash(CourseController::filterCourseCategroy()) => $category->id])) . '"><i class="fa fa-bookmark"></i></a>');
+            $grid->column('name', '名称')->editable()->sortable();
+            $grid->column('excerpt', '简介')->editable('textarea');
+            $grid->column('content', '详情')->editable('textarea');
+
+            $grid->column('course_count', '课程数')->display(function () {
+                $count = Category::find($this->id)->course_count;
+                $url = action('\App\Admin\Controllers\CourseController@index', [
+                    Grid\Filter\Where::getQueryHash(CourseController::filterCourseCategroy()) => $this->id
+                ]);
+                return '<a href="' . e($url) . '">' . e($count) . '</a>';
             });
         });
     }
@@ -57,9 +61,18 @@ class CategoryController extends Controller
     {
         return Admin::form(Category::class, function (Form $form) {
             $form->display('id', 'ID');
-            $form->text('name', '专业大类名称');
-            $form->text('excerpt', '专业大类简介');
-            $form->textarea('content', '专业大类详情');
+
+            $form->text('name', '名称');
+            $form->text('excerpt', '简介');
+            $form->textarea('content', '详情');
+
+            $form->multipleSelect('courses_relation', '课程')->options(Course::pluck('title', 'id'));
         });
     }
+}
+
+class Category extends \App\Category
+{
+    protected $hidden = [];
+    protected $with = [];
 }

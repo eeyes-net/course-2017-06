@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Feedback;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -41,10 +42,13 @@ class FeedbackController extends Controller
     protected function grid()
     {
         return Admin::grid(Feedback::class, function (Grid $grid) {
-            $grid->model()->latest();
-            $grid->id('ID')->sortable();
+            $grid->column('id', 'ID')->sortable();
+
             $grid->column('content', '反馈内容');
-            $grid->column('created_at', '反馈时间')->sortable();
+            $grid->column('created_at', '评论时间')->display(function () {
+                $carbon = new Carbon($this->created_at);
+                return e($carbon->diffForHumans());
+            })->sortable();
         });
     }
 
@@ -52,6 +56,7 @@ class FeedbackController extends Controller
     {
         return Admin::form(Feedback::class, function (Form $form) {
             $form->display('id', 'ID');
+
             $form->textarea('content', '反馈内容');
         });
     }

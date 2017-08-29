@@ -3,15 +3,15 @@
 namespace App\Admin\Controllers;
 
 use App\Category;
+use App\Course;
 use App\Download;
-use App\Post;
-
+use App\Http\Controllers\Controller;
+use App\Teacher;
+use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
 use Illuminate\Database\Eloquent\Builder;
 
 class CourseController extends Controller
@@ -44,53 +44,73 @@ class CourseController extends Controller
 
     protected function grid()
     {
-        return Admin::grid(Post::class, function (Grid $grid) {
-            $grid->model()->ofType('course');
+        return Admin::grid(Course::class, function (Grid $grid) {
+            $grid->column('id', 'ID')->sortable();
 
-            $grid->id('ID')->sortable();
-            $grid->column('title', '课程姓名')->sortable()->editable();
-            $grid->column('excerpt', '课程简介')->editable();
-            $grid->column('visit_count', '访问量')->sortable();
+            $grid->column('title', '名称')->editable()->sortable();
+            $grid->column('excerpt', '简介')->editable('textarea');
+            $grid->column('content', '详情')->editable('textarea');
+            $grid->column('visit_count', '访问次数')->editable('text')->sortable();
+
+            $grid->column('code', '课程代码')->editable();
+            $grid->column('hours', '学时')->editable();
+            $grid->column('credit', '学分')->editable();
+            $grid->column('hours_per_week', '周学时')->editable();
+            $grid->column('teaching_model', '教学模式')->editable('textarea');
+            $grid->column('assessment_method', '考核方式')->editable('textarea');
+            $grid->column('feature', '特色')->editable('textarea');
+
             $grid->column('approved_comment_count', '已通过评论数')->display(function () {
-                $post = Post::find($this->id);
-                return $post->comments()->approved()->count();
+                $count = Course::find($this->id)->approved_comment_count;
+                $url = action('\App\Admin\Controllers\CommentController@index', [
+                    'commentable_type' => Course::class,
+                    'commentable_id' => $this->id,
+                    'approved' => '1',
+                ]);
+                return '<a href="' . e($url) . '">' . e($count) . '</a>';
             });
             $grid->column('comment_count', '总评论数')->display(function () {
-                $post = Post::find($this->id);
-                return $post->comments()->count();
+                $count = Course::find($this->id)->comment_count;
+                $url = action('\App\Admin\Controllers\CommentController@index', [
+                    'commentable_type' => Course::class,
+                    'commentable_id' => $this->id,
+                ]);
+                return '<a href="' . e($url) . '">' . e($count) . '</a>';
             });
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->disableIdFilter();
                 $filter->where(function (Builder $query) {
-                    $query->where('title', 'like', "%{$this->input}%")
-                        ->orWhere('excerpt', 'like', "%{$this->input}%")
-                        ->orWhere('content', 'like', "%{$this->input}%");
+                    query_search($query, $this->input);
                 }, '搜索');
-                $filter->where(static::filterCourseCategroy(), '专业大类')
-                    ->select(Category::all()->pluck('name', 'id'));
-            });
-
-            $grid->actions(function (Grid\Displayers\Actions $actions) {
-                /** @var Post $post */
-                $post = $actions->row;
-                $actions->append('<a href="' . e(action('\App\Admin\Controllers\CommentController@index', ['post_id' => $post->id])) . '"><i class="fa fa-comment"></i></a>');
+                $filter->where(static::filterCourseCategroy(), '课程分类')
+                    ->select(Category::pluck('name', 'id'));
             });
         });
     }
 
     protected function form()
     {
-        return Admin::form(Post::class, function (Form $form) {
+        return Admin::form(Course::class, function (Form $form) {
             $form->display('id', 'ID');
-            $form->text('title', '课程姓名');
-            $form->text('excerpt', '课程简介');
-            $form->textarea('content', '课程详情');
+
+            $form->text('title', '名称');
+            $form->text('excerpt', '简介');
+            $form->textarea('content', '详情');
             $form->number('visit_count', '访问量');
+
+            $form->text('code', '课程代码');
+            $form->text('hours', '学时');
             $form->text('credit', '学分');
-            $form->multipleSelect('teachers', '教师')->options(Post::ofType('teacher')->get()->pluck('title', 'id'));
-            $form->multipleSelect('categories', '专业大类')->options(Category::all()->pluck('name', 'id'));
-            $form->multipleSelect('downloads', '下载链接')->options(Download::all()->pluck('title', 'id'));
+            $form->text('hours_per_week', '周学时');
+            $form->text('credit', '学分');
+            $form->textarea('teaching_model', '教学模式');
+            $form->textarea('assessment_method', '考核方式');
+            $form->textarea('feature', '特色');
+
+            $form->multipleSelect('teachers_relation', '教师')->options(Teacher::pluck('title', 'id'));
+            $form->multipleSelect('categories_relation', '课程分类')->options(Category::pluck('name', 'id'));
+            $form->multipleSelect('downloads_relation', '下载链接')->options(Download::pluck('title', 'id'));
         });
     }
 
@@ -100,12 +120,13 @@ class CourseController extends Controller
      *
      * @return \Closure
      */
-    public static function filterCourseCategroy() {
+    public static function filterCourseCategroy()
+    {
         return function ($query) {
             /** @var Category $category */
             $category = Category::find($this->input);
-            $post_ids = $category->courses()->get()->pluck('id');
-            $query->whereIn('id', $post_ids);
+            $course_ids = $category->courses_relation()->get()->pluck('id');
+            $query->whereIn('id', $course_ids);
         };
     }
 }

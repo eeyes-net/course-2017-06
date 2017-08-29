@@ -10,11 +10,11 @@ Route::group([
     'middleware' => ['web', 'admin'],
 ], function (Router $router) {
     $router->get('/', 'HomeController@index');
-    $router->resource('teachers', 'TeacherController');
-    $router->resource('courses', 'CourseController');
-    $router->resource('categories', 'CategoryController');
-    $router->resource('downloads', 'DownloadController');
-    $router->resource('comments', 'CommentController');
+    $router->resource('teacher', 'TeacherController');
+    $router->resource('course', 'CourseController');
+    $router->resource('category', 'CategoryController');
+    $router->resource('download', 'DownloadController');
+    $router->resource('comment', 'CommentController');
     $router->resource('feedback', 'FeedbackController');
 
     $router->get('api/posts', 'Api\PostController@index');
