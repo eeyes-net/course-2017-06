@@ -25,9 +25,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $assessment_method 考核方式
  * @property string $feature 特色
  *
- * @property \Illuminate\Database\Eloquent\Collection $teachersRelation
- * @property \Illuminate\Database\Eloquent\Collection $categoriesRelation
- * @property \Illuminate\Database\Eloquent\Collection $downloadsRelation
+ * @property \Illuminate\Database\Eloquent\Collection $teachers_relation
+ * @property \Illuminate\Database\Eloquent\Collection $categories_relation
+ * @property \Illuminate\Database\Eloquent\Collection $downloads_relation
  *
  * @property \Illuminate\Support\Collection $teachers 本课程的教师简要信息
  * @property \Illuminate\Support\Collection $categories 本课程的课程分类简要信息
@@ -38,12 +38,6 @@ class Course extends Model
 {
     use PostTrait;
 
-    protected $with = [
-        'categoriesRelation',
-    ];
-    protected $hidden = [
-        'categoriesRelation'
-    ];
     protected $appends = [
         'teachers',
         'categories',
@@ -57,33 +51,33 @@ class Course extends Model
         'visit_count',
     ];
 
-    public function teachersRelation()
+    public function teachers_relation()
     {
         return $this->belongsToMany(Teacher::class);
     }
 
-    public function categoriesRelation()
+    public function categories_relation()
     {
         return $this->belongsToMany(Category::class);
     }
 
-    public function downloadsRelation()
+    public function downloads_relation()
     {
         return $this->belongsToMany(Download::class);
     }
 
     public function getTeachersAttribute()
     {
-        return $this->teachersRelation()->get()->pluck('simple_data');
+        return $this->teachers_relation()->get()->pluck('simple_data');
     }
 
     public function getCategoriesAttribute()
     {
-        return $this->categoriesRelation()->get()->pluck('simple_data');
+        return $this->categories_relation()->get()->pluck('simple_data');
     }
 
     public function getDownloadsAttribute()
     {
-        return $this->downloadsRelation()->get()->pluck('simple_data');
+        return $this->downloads_relation()->get()->pluck('simple_data');
     }
 }

@@ -21,17 +21,19 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email 教师邮箱
  * @property string $department 教师的学院或部门
  *
- * @property \Illuminate\Database\Eloquent\Collection $coursesRelation
+ * @property \Illuminate\Database\Eloquent\Collection $courses_relation
  *
  * @property \Illuminate\Support\Collection $courses 本教师的课程简要信息
  * @property \Illuminate\Support\Collection $simple_data 简要信息
+ * @property string $avatar_url 教师头像绝对URL
  */
 class Teacher extends Model
 {
     use PostTrait;
 
     protected $appends = [
-        'courses'
+        'courses',
+        'avatar_url',
     ];
     protected $simpleDataFields = [
         'id',
@@ -40,13 +42,18 @@ class Teacher extends Model
         'visit_count',
     ];
 
-    public function coursesRelation()
+    public function courses_relation()
     {
         return $this->belongsToMany(Course::class);
     }
 
     public function getCoursesAttribute()
     {
-        return $this->coursesRelation()->get()->pluck('simple_data');
+        return $this->courses_relation()->get()->pluck('simple_data');
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return config('filesystems.admin.url') . '/' . $this->avatar;
     }
 }

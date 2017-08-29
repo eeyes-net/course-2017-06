@@ -9,7 +9,7 @@ namespace App;
  *
  * @property array $simpleDataFields
  *
- * @property \Illuminate\Database\Eloquent\Collection $commentsRelation
+ * @property \Illuminate\Database\Eloquent\Collection $comments_relation
  *
  * @method \Illuminate\Database\Query\Builder ordered 排序算法
  * @method \Illuminate\Database\Query\Builder paginatePluckSimpleData 简单数据分页
@@ -17,7 +17,7 @@ namespace App;
  */
 trait PostTrait
 {
-    public function commentsRelation()
+    public function comments_relation()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
@@ -76,11 +76,11 @@ trait PostTrait
 
     public function getCommentCountAttribute()
     {
-        return $this->commentsRelation()->count();
+        return $this->comments_relation()->count();
     }
 
     public function getApprovedCommentCountAttribute()
     {
-        return $this->commentsRelation()->approved()->count();
+        return $this->comments_relation()->approved()->count();
     }
 }

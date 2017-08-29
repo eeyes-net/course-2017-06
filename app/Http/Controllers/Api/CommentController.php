@@ -10,7 +10,7 @@ class CommentController extends Controller
     public function like($id)
     {
         $like = new CommentLike();
-        Comment::find($id)->likes()->save($like);
+        Comment::find($id)->likes_relation()->save($like);
         return null;
     }
 }

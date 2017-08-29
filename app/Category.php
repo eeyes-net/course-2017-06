@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at 创建时间
  * @property string $updated_at 修改时间
  *
- * @property \Illuminate\Database\Eloquent\Collection $coursesRelation
+ * @property \Illuminate\Database\Eloquent\Collection $courses_relation
  *
  * @property int $course_count 课程数量
  */
@@ -38,14 +38,14 @@ class Category extends Model
         'name',
     ];
 
-    public function coursesRelation()
+    public function courses_relation()
     {
         return $this->belongsToMany(Course::class);
     }
 
     public function getCourseCountAttribute()
     {
-        return $this->coursesRelation()->count();
+        return $this->courses_relation()->count();
     }
 
     /**

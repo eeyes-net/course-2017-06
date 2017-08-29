@@ -13,6 +13,6 @@ class CourseController extends Controller
 
     public function show($id)
     {
-        return $this->model::with(['categories'])->find($id);
+        return $this->model::find($id);
     }
 }

@@ -26,7 +26,7 @@ class CategoryController extends Controller
         if (!$category) {
             return null;
         }
-        return $category->courses()->ordered()->paginatePluckSimpleData();
+        return $category->courses_relation()->ordered()->paginatePluckSimpleData();
     }
 
     public function courseIndex()
@@ -36,7 +36,7 @@ class CategoryController extends Controller
         foreach ($categories as $category) {
             $result[] = [
                 'name' => $category->name,
-                'data' => $category->courses()->limit(2)->ordered()->get()->pluck('simple_data'),
+                'data' => $category->courses_relation()->limit(2)->ordered()->get()->pluck('simple_data'),
             ];
         }
         return $result;

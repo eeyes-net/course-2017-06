@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $commentable_id 关联的Commentable模型ID
  * @property string $commentable_type 关联的Commentable模型类名
  *
- * @property CommentLike $coursesRelation
+ * @property CommentLike $likes_relation
  * @property \App\PostTrait $commentable
  *
  * @property int $like_count 点赞数
@@ -43,7 +43,7 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function likesRelation()
+    public function likes_relation()
     {
         return $this->hasMany(CommentLike::class);
     }
@@ -74,7 +74,7 @@ class Comment extends Model
 
     public function getLikeCountAttribute()
     {
-        return $this->likesRelation()->count();
+        return $this->likes_relation()->count();
     }
 
     public function getCommentableTypeStrAttribute()
@@ -92,6 +92,6 @@ class Comment extends Model
                 return class_basename($this->commentable_type);
         }
 
-        return $this->likesRelation()->count();
+        return $this->likes_relation()->count();
     }
 }
