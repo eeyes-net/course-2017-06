@@ -85,6 +85,7 @@
                 </div>
 
                 <div class="links">
+                    <a href="/index/">HOME PAGE</a>
                     <a href="/docs/">Documentation</a>
                     <a href="/admin/">Administration</a>
                     <a href="https://github.com/eeyes-net/course-2017-06">Fork me on GitHub</a>
