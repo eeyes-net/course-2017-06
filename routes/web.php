@@ -12,15 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('web.index.index');
 });
 
 Route::get('docs/{name?}', 'DocumentationController@show')->where('name', '.*?');
-
-
-Route::get('index', function () {
-    return view('web.layouts.master');
-});
 
 Route::namespace('Web')->group(function () {
     Route::get('s', 'SearchController@search');
