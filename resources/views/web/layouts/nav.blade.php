@@ -6,7 +6,7 @@
                 <span style="margin-left: .5em; font-size: 18px; font-family: 黑体, 微软雅黑, Arial, Helvetica, sans-serif;">{{ config('app.name') }}</span>
             </a>
 
-            <div class="navbar-burger burger" data-target="navMenuExample">
+            <div class="navbar-burger burger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -16,14 +16,14 @@
         <div class="navbar-menu">
             <div class="navbar-start">
                 <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link is-active" href="{{ action('Web\CourseController@index') }}">
+                    <a class="navbar-link" href="{{ action('Web\CourseController@index') }}">
                         课程
                     </a>
                     <div class="navbar-dropdown">
                         @foreach($categories as $category)
-                        <a class="navbar-item" href="{{ action('Web\CategoryController@courses', ['name' => $category->name]) }}">
-                            {{ $category->name }}
-                        </a>
+                            <a class="navbar-item" href="{{ action('Web\CategoryController@courses', ['name' => $category->name]) }}">
+                                {{ $category->name }}
+                            </a>
                         @endforeach
                     </div>
                 </div>
@@ -118,13 +118,24 @@
 </div>
 <script>
     (function () {
+        var elNavBarBurger = document.querySelector('.navbar-burger');
+        var elNavBarMenu = document.querySelector('.navbar-menu');
+        elNavBarBurger.addEventListener('click', function () {
+            if (elNavBarMenu.className.indexOf('is-active') >= 0) {
+                elNavBarMenu.className = elNavBarMenu.className.replace(/is-active/g, '');
+            } else {
+                elNavBarMenu.className += ' is-active';
+            }
+        });
+
         var elWeappCodeModal = document.querySelector('.weapp-code-modal');
-        document.querySelector('.weapp-code-modal-show').addEventListener('click', function () {
+        var elWeappCodeModalShow = document.querySelector('.weapp-code-modal-show');
+        elWeappCodeModalShow.addEventListener('click', function () {
             elWeappCodeModal.className += ' is-active';
         });
-        var els = document.querySelectorAll('.weapp-code-modal-hide');
-        for (var i = 0; i < els.length; ++i) {
-            els[i].addEventListener('click', function () {
+        var elWeappCodeModalHide = document.querySelectorAll('.weapp-code-modal-hide');
+        for (var i = 0; i < elWeappCodeModalHide.length; ++i) {
+            elWeappCodeModalHide[i].addEventListener('click', function () {
                 elWeappCodeModal.className = elWeappCodeModal.className.replace(/is-active/g, '');
             });
         }
