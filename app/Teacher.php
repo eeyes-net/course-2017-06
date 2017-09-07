@@ -54,6 +54,6 @@ class Teacher extends Model
 
     public function getAvatarUrlAttribute()
     {
-        return config('filesystems.admin.url') . '/' . $this->avatar;
+        return config('filesystems.disks.admin.url') . '/' . $this->avatar;
     }
 }

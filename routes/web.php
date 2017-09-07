@@ -11,8 +11,33 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('docs/{name?}', 'DocumentationController@show')->where('name', '.*?');
+
+Route::get('/', function () {
+    return view('web.index.index');
+});
+Route::get('about', function () {
+    return view('web.index.about');
+});
+Route::namespace('Web')->group(function () {
+    Route::get('s', 'SearchController@search');
+    Route::prefix('category')->group(function () {
+        Route::get('/', 'CategoryController@index');
+        Route::get('course', 'CategoryController@courseIndex');
+        Route::get('s', 'TeacherController@search');
+        Route::get('{name}', 'CategoryController@show');
+        Route::get('{name}/courses', 'CategoryController@courses');
+    });
+    Route::prefix('course')->group(function () {
+        Route::get('/', 'CourseController@index');
+        Route::get('s', 'CourseController@search');
+        Route::get('{id}', 'CourseController@show');
+        Route::get('{id}/comment', 'CourseController@comment');
+    });
+    Route::prefix('teacher')->group(function () {
+        Route::get('/', 'TeacherController@index');
+        Route::get('s', 'TeacherController@search');
+        Route::get('{id}', 'TeacherController@show');
+        Route::get('{id}/comment', 'TeacherController@comment');
+    });
+});
