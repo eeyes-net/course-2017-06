@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'      => 'Laravel-admin',
+    'name'      => env('APP_NAME', 'e学堂'),
 
     /*
      * Logo in admin panel header.
      */
-    'logo'      => '<b>Laravel</b> admin',
+    'logo'      => '<b>e</b>学堂',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<img src="/images/logo/course.png" style="height: 1em;">',
 
     /*
      * Laravel-admin url prefix.
@@ -119,5 +119,5 @@ return [
     /*
      * Version displayed in footer.
      */
-    'version'   => '1.0',
+    'version'   => '1.1',
 ];
