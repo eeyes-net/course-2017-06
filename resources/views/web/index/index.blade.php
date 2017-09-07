@@ -28,6 +28,7 @@
                         </form>
                     </div>
                 </div>
+                <p style="color: gray;">开始使用e学堂表示您同意了《<a href="/about" style="color: lightgreen;">知识产权声明</a>》</p>
             </div>
         </div>
     </section>

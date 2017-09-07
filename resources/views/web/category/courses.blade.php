@@ -7,7 +7,7 @@
                 <div class="columns is-vcentered">
                     <div class="column">
                         <p class="title">
-                            课程
+                            分类：{{ $name }}
                         </p>
                         <p class="subtitle">
                             Courses of <em>Xi'an Jiao Tong University</em>.

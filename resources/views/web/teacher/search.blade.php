@@ -7,10 +7,10 @@
                 <div class="columns is-vcentered">
                     <div class="column">
                         <p class="title">
-                            课程
+                            教师搜索结果：{{ $q }}
                         </p>
                         <p class="subtitle">
-                            Courses of <em>Xi'an Jiao Tong University</em>.
+                            Searching result.
                         </p>
                     </div>
                 </div>
@@ -22,9 +22,9 @@
 @section('main')
     <section class="section">
         <div class="container">
-            @include('web.course.layouts.list')
+            <div class="content">
+                @include('web.teacher.layouts.list')
+            </div>
         </div>
     </section>
-    @include('web.layouts.pagination')
-    <section class="section"></section>
 @stop

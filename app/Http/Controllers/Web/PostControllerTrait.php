@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Comment;
 use Illuminate\Http\Request;
 
 /**
@@ -28,7 +27,10 @@ trait PostControllerTrait
 
     public function search(Request $request)
     {
-        return view('web.' . $this->viewPrefix . '.search', ['data' => $this->apiController()->search($request)]);
+        return view('web.' . $this->viewPrefix . '.search', [
+            'data' => $this->apiController()->search($request),
+            'q' => $request->query('q', ''),
+        ]);
     }
 
     public function comment($id)

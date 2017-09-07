@@ -33,12 +33,22 @@
             </div>
 
             <div class="navbar-end">
+                <div class="navbar-item">
+                    <form action="/s" method="GET">
+                        <div class="field is-grouped">
+                            <div class="control has-icons-left is-expanded">
+                                <input type="search" name="q" class="input is-flat required email" placeholder="搜索课程、教师..." aria-required="true">
+                                <span class="icon is-small is-left"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="navbar-item has-dropdown is-hoverable">
                     <div class="navbar-link">
                         关于
                     </div>
                     <div class="navbar-dropdown ">
-                        <a class="navbar-item" href="https://github.com/eeyes-net/course-2017-06" target="_blank">
+                        <a class="navbar-item" href="/about" target="_blank">
                             <span class="icon"><img src="/images/logo/course.png" alt="e学堂logo"></span>
                             e学堂
                         </a>

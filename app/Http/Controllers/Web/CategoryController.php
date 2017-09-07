@@ -10,6 +10,9 @@ class CategoryController extends Controller
 
     public function courses($name)
     {
-        return $this->apiController()->courses($name);
+        return view('web.category.courses', [
+            'name' => $name,
+            'data' => $this->apiController()->courses($name),
+        ]);
     }
 }

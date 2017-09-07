@@ -1,47 +1,30 @@
-<link rel="stylesheet" href="/css/bulma.min.css">
+@extends('web.layouts.master')
 
-<div class="container">
-    @foreach($data as $datum)
-        <div class="box">
-            <article class="media">
-                <div class="media-left">
-                    <figure class="image is-64x64">
-                        <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <a href="/post/{{ $datum['id'] }}">
-                                <strong>{{ $datum['title'] }}</strong>
-                            </a>
-                            <small>{{ $datum['visit_count'] }}次访问</small>
-                            <br>
-                        {{ $datum['excerpt'] }}
-                        @if (isset($datum['categories']))
-                            <div class="tags">
-                                @foreach($datum['categories'] as $category)
-                                    <span class="tag">{{ $category }}</span>
-                                @endforeach
-                            </div>
-                            @endif
-                            </p>
+@section('banner')
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <div class="column">
+                        <p class="title">
+                            教师
+                        </p>
+                        <p class="subtitle">
+                            Teachers of <em>Xi'an Jiao Tong University</em>.
+                        </p>
                     </div>
                 </div>
-            </article>
+            </div>
         </div>
-    @endforeach
-    <nav class="pagination is-centered">
-        <a href="/post?page={{ $data->currentPage() - 1 }}" class="pagination-previous" @if ($data->currentPage() === 1) disabled @endif>Previous</a>
-        <a href="/post?page={{ $data->currentPage() + 1 }}" class="pagination-next" @if ($data->currentPage() === $data->lastPage()) disabled @endif>Next page</a>
-        <ul class="pagination-list">
-            @foreach (pageList($data->lastPage(), $data->currentPage()) as $page)
-                @if ($page['paginationEllipsis'])
-                    <li><span class="pagination-ellipsis">&hellip;</span></li>
-                @else
-                    <li><a href="/post?page={{ $page['page'] }}" class="pagination-link @if ($page['isCurrent']) is-current @endif">{{ $page['page'] }}</a></li>
-                @endif
-            @endforeach
-        </ul>
-    </nav>
-</div>
+    </section>
+@stop
+
+@section('main')
+    <section class="section">
+        <div class="container">
+            @include('web.teacher.layouts.list')
+        </div>
+    </section>
+    @include('web.layouts.pagination')
+    <section class="section"></section>
+@stop

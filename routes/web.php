@@ -11,12 +11,14 @@
 |
 */
 
+Route::get('docs/{name?}', 'DocumentationController@show')->where('name', '.*?');
+
 Route::get('/', function () {
     return view('web.index.index');
 });
-
-Route::get('docs/{name?}', 'DocumentationController@show')->where('name', '.*?');
-
+Route::get('about', function () {
+    return view('web.index.about');
+});
 Route::namespace('Web')->group(function () {
     Route::get('s', 'SearchController@search');
     Route::prefix('category')->group(function () {
