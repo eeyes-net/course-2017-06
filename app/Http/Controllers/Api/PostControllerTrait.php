@@ -37,7 +37,7 @@ trait PostControllerTrait
 
     public function comment($id)
     {
-        return $this->model::find($id)->comments()->approved()->ordered()->paginate();
+        return $this->model::find($id)->comments_relation()->approved()->ordered()->paginate();
     }
 
     public function commentStore(Request $request, $id)
@@ -48,7 +48,7 @@ trait PostControllerTrait
         }
         $comment = new Comment();
         $comment->content = $content;
-        $this->model::find($id)->comments()->save($comment);
+        $this->model::find($id)->comments_relation()->save($comment);
         return null;
     }
 }
