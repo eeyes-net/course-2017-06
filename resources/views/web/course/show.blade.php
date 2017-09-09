@@ -13,11 +13,8 @@
                             {{ $data->excerpt }}
                         </p>
                         @if (isset($data->categories))
-                            <div class="tags">
-                                @foreach($data->categories as $category)
-                                    <a href="{{ action('Web\CategoryController@courses', ['name' => $category['name']]) }}" style="margin-right: .3em;"><span class="tag">{{ $category['name'] }}</span></a>
-                                @endforeach
-                            </div>
+                            <?php $tags = $data->categories; ?>
+                            @include('.web.course.layouts.category_tags')
                         @endif
                     </div>
                 </div>

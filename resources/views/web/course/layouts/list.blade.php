@@ -9,15 +9,12 @@
                         </a>
                         <small>{{ $datum['visit_count'] }}次访问</small>
                         <br>
-                    {{ $datum['excerpt'] }}
-                    @if (isset($datum['categories']))
-                        <div class="tags">
-                            @foreach($datum['categories'] as $category)
-                                <a href="{{ action('Web\CategoryController@courses', ['name' => $category['name']]) }}"><span class="tag">{{ $category['name'] }}</span></a>
-                            @endforeach
-                        </div>
+                        {{ $datum['excerpt'] }}
+                        @if (isset($datum['categories']))
+                            <?php $tags = $datum['categories']; ?>
+                            @include('.web.course.layouts.category_tags')
                         @endif
-                        </p>
+                    </p>
                 </div>
             </div>
         </article>
