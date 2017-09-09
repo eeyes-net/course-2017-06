@@ -14,6 +14,7 @@ class FeedbackController extends Controller
         }
         $feedback = new Feedback();
         $feedback->content = $content;
+        $feedback->contact = $request->input('contact', '');
         $feedback->save();
         return null;
     }
