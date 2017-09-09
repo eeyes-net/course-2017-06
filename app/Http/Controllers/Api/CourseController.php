@@ -10,9 +10,4 @@ class CourseController extends Controller
     use PostControllerTrait;
 
     protected $model = Course::class;
-
-    public function show($id)
-    {
-        return $this->model::find($id);
-    }
 }

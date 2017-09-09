@@ -21,7 +21,9 @@ trait PostControllerTrait
 
     public function show($id)
     {
-        return $this->model::find($id);
+        $model = $this->model::find($id);
+        increase_visit_count($model);
+        return $model;
     }
 
     public function search(Request $request)

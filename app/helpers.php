@@ -95,3 +95,17 @@ function pageList($last, $current, $delta = 2)
     }
     return $result;
 }
+
+/**
+ * @param \Illuminate\Database\Eloquent\Model $model
+ */
+function increase_visit_count($model)
+{
+    try {
+        $model->increment('visit_count');
+    } catch (\Illuminate\Database\QueryException $e) {
+        if ($e->errorInfo[1] !== 1054) {
+            throw $e;
+        }
+    }
+}
