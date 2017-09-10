@@ -21,4 +21,5 @@ Route::group([
     $router->resource('download', 'DownloadController');
     $router->resource('comment', 'CommentController');
     $router->resource('feedback', 'FeedbackController');
+    $router->resource('api_log', 'ApiLogController');
 });

@@ -45,6 +45,7 @@ class InstallAdminMenu extends Command
             ['title' => '下载链接', 'icon' => 'fa-link', 'uri' => 'download'],
             ['title' => '所有评论', 'icon' => 'fa-comment', 'uri' => 'comment'],
             ['title' => '所有反馈', 'icon' => 'fa-retweet', 'uri' => 'feedback'],
+            ['title' => 'API记录', 'icon' => 'fa-history', 'uri' => 'api_log'],
         ];
         foreach ($menus as $menu) {
             /** @var Menu $menu_model */

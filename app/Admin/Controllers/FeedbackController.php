@@ -45,6 +45,8 @@ class FeedbackController extends Controller
             $grid->column('id', 'ID')->sortable();
 
             $grid->column('content', '反馈内容');
+            $grid->column('contact', '联系方式');
+
             $grid->column('created_at', '评论时间')->display(function () {
                 $carbon = new Carbon($this->created_at);
                 return e($carbon->diffForHumans());
@@ -58,6 +60,9 @@ class FeedbackController extends Controller
             $form->display('id', 'ID');
 
             $form->textarea('content', '反馈内容');
+            $form->text('contact', '联系方式');
+
+            $form->display('created_at', '评论时间');
         });
     }
 }
