@@ -11,7 +11,7 @@
 1. 创建数据库用户、数据库
 2. 将代码解压到服务器，分配一个域名的根目录到`public/`文件夹
 3. 执行`composer install`
-4. 执行`chmod 777 storage -R`
+4. 执行`chmod 777 storage -R` `chmod 777 bootstrap/cache -R`
 5. 修改`.env`文件中的数据库相关配置（生产环境请关闭`APP_DEBUG`）
 6. 执行`php artisan migrate`
 7. 执行`php artisan vendor:publish --tag=laravel-admin`

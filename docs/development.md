@@ -22,15 +22,17 @@
 
 ## 数据库
 
-本项目的数据库结构仿照WordPress，例如`post`表是课程和教师信息，`post_meta`是额外的单独信息，方便扩展。
-
 | 表名 | 模型 | 说明 |
 | :---: | :---: | :---: |
-| posts | \App\Post | 课程和教师信息（之后简称“文章”） |
-| post_metas | \App\PostMeta | 课程和教师扩展信息 |
-| teacher_course |  | 教师和课程的多对多关联 |
-| comments | \App\Comment | 文章的评论 |
-| categories | \App\Category | 专业大类 |
-| category_course |  | 专业大类和课程的多对多关联 |
-| feedback | \App\Feedback | 反馈信息 |
 | admin_* | \Encore\Admin\Auth\Database\\* | Laravel admin的表 |
+| api_logs | \App\ApiLog | API记录 |
+| categories | \App\Category | 课程分类 |
+| comments | \App\Comment | 评论 |
+| comment_likes | \App\CommentLike | 评论点赞 |
+| courses | \App\Course | 课程 |
+| downloads | \App\Download | 下载 |
+| feedback | \App\Feedback | 反馈 |
+| teachers | \App\Teacher | 教师 |
+| category_course |  | 课程分类和课程的多对多关联 |
+| course_download |  | 课程和下载的多对多关联 |
+| course_teacher |  | 课程和教师的多对多关联 |
