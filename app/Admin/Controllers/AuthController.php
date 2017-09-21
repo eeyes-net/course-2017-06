@@ -3,7 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Library\Eeyes\EeyesAdmin;
+use App\Library\Eeyes\Api\Permission;
+use App\Library\Eeyes\Api\XjtuUserInfo;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Auth\Database\Role;
 use Illuminate\Support\Facades\Auth;
@@ -23,17 +24,18 @@ class AuthController extends Controller
     {
         phpCAS::forceAuthentication();
         $username = phpCAS::getUser();
-        $permission = EeyesAdmin::permission($username, 'website.course.admin');
+        $permission = Permission::username($username, 'website.course.admin');
         if ($permission['can']) {
             /** @var Administrator $user */
             $user = Administrator::firstOrNew(['username' => $username]);
             if (!$user->exists) {
                 $user->password = '*';
-                $user->name = ucfirst($username);
+                $userinfo = XjtuUserInfo::getByNetId($username);
+                $user->name = $userinfo ? $userinfo['username'] : ucfirst($username);
                 $user->save();
             }
 
-            $administrator_permission = EeyesAdmin::permission($username, 'website.course.administrator');
+            $administrator_permission = Permission::username($username, 'website.course.administrator');
             $administrator_role = Role::where('slug', 'administrator')->get();
             if ($administrator_permission['can']) {
                 $user->roles()->syncWithoutDetaching($administrator_role);
@@ -54,7 +56,7 @@ class AuthController extends Controller
         session_unset();
         session_destroy();
         return redirect(phpCAS::getServerLogoutURL() . '?' . http_build_query([
-                'service' => url(config('admin.prefix'))
+                'service' => url(config('admin.prefix')),
             ]));
     }
 }
