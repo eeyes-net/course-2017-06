@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Feedback;
+use App\Library\Eeyes\Api\Notification;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -16,6 +17,7 @@ class FeedbackController extends Controller
         $feedback->content = $content;
         $feedback->contact = $request->input('contact', '');
         $feedback->save();
+        Notification::dingTalk("e学堂意见反馈\r\n内容：{$feedback->content}\r\n联系方式：{$feedback->contact}");
         return null;
     }
 }

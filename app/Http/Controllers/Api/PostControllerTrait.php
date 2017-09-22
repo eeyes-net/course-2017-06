@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Comment;
+use App\Library\Eeyes\Api\Notification;
 use Illuminate\Http\Request;
 
 /**
@@ -48,7 +49,9 @@ trait PostControllerTrait
         }
         $comment = new Comment();
         $comment->content = $content;
-        $this->model::find($id)->comments_relation()->save($comment);
+        $model = $this->model::find($id);
+        $model->comments_relation()->save($comment);
+        Notification::dingTalk("e学堂评论\r\n内容：{$comment->content}\r\n文章标题：{$model->title}");
         return null;
     }
 }

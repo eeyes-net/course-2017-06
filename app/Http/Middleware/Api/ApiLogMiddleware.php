@@ -22,7 +22,7 @@ class ApiLogMiddleware
             $apiLog->path = $request->path();
             $apiLog->method = $request->method();
             $apiLog->ip = $request->ip();
-            $apiLog->user_agent = $request->userAgent();
+            $apiLog->user_agent = (string)$request->userAgent();
             $apiLog->query = (string)$request->getQueryString();
             $apiLog->body = (string)$request->getContent();
             $apiLog->save();
