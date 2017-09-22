@@ -30,8 +30,7 @@ class AuthController extends Controller
             $user = Administrator::firstOrNew(['username' => $username]);
             if (!$user->exists) {
                 $user->password = '*';
-                $userinfo = XjtuUserInfo::getByNetId($username);
-                $user->name = $userinfo ? $userinfo['username'] : ucfirst($username);
+                update_admin_name($user);
                 $user->save();
             }
 

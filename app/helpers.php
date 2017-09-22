@@ -2,6 +2,7 @@
 
 /**
  * @param string $sql
+ *
  * @return string mixed
  */
 function sql_filter($sql)
@@ -75,21 +76,21 @@ function pageList($last, $current, $delta = 2)
             $result[] = [
                 'paginationEllipsis' => true,
                 'page' => '\u8230',
-                'isCurrent' => false
+                'isCurrent' => false,
             ];
         } else {
             if ($deltaPage === 2) {
                 $result[] = [
                     'page' => $page - 1,
                     'paginationEllipsis' => false,
-                    'isCurrent' => false
+                    'isCurrent' => false,
                 ];
             }
         }
         $result[] = [
             'page' => $page,
             'paginationEllipsis' => false,
-            'isCurrent' => ($page === $current)
+            'isCurrent' => ($page === $current),
         ];
         $lastPage = $page;
     }
@@ -108,4 +109,25 @@ function increase_visit_count($model)
             throw $e;
         }
     }
+}
+
+/**
+ * 更新用户名称
+ *
+ * @param \Encore\Admin\Auth\Database\Administrator|string $user
+ *
+ * @return \Encore\Admin\Auth\Database\Administrator|\Illuminate\Database\Eloquent\Model|null|string|static
+ */
+function update_admin_name($user)
+{
+    if (is_string($user)) {
+        $user = \Encore\Admin\Auth\Database\Administrator::where(['username' => $user])->first();
+    }
+    if ($user instanceof \Encore\Admin\Auth\Database\Administrator) {
+        $user_info = \App\Library\Eeyes\Api\XjtuUserInfo::getByNetId($user->username);
+        $user->name = $user_info ? $user_info['username'] : ucfirst($user);
+        $user->save();
+        return $user;
+    }
+    return null;
 }
