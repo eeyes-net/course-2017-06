@@ -103,7 +103,6 @@ class CourseController extends Controller
             $form->text('hours', '学时');
             $form->text('credit', '学分');
             $form->text('hours_per_week', '周学时');
-            $form->text('credit', '学分');
             $form->textarea('teaching_model', '教学模式');
             $form->textarea('assessment_method', '考核方式');
             $form->textarea('feature', '特色');

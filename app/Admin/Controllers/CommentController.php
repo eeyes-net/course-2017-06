@@ -46,6 +46,8 @@ class CommentController extends Controller
     protected function grid()
     {
         return Admin::grid(Comment::class, function (Grid $grid) {
+            $grid->disableCreation();
+
             $grid->id('ID')->sortable();
 
             $grid->column('commentable_type_str', '文章类型')->display(function () {
