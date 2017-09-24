@@ -124,7 +124,7 @@ function update_admin_name($user)
         $user = \Encore\Admin\Auth\Database\Administrator::where(['username' => $user])->first();
     }
     if ($user instanceof \Encore\Admin\Auth\Database\Administrator) {
-        $user_info = \App\Library\Eeyes\Api\XjtuUserInfo::getByNetId($user->username);
+        $user_info = \Eeyes\Common\Api\Eeyes\XjtuUserInfo::getByNetId($user->username);
         $user->name = $user_info ? $user_info['username'] : ucfirst($user);
         $user->save();
         return $user;

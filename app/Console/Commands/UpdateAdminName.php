@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Library\Eeyes\Api\XjtuUserInfo;
 use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Console\Command;
 

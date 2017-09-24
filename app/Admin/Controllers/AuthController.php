@@ -3,8 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Library\Eeyes\Api\Permission;
-use App\Library\Eeyes\Api\XjtuUserInfo;
+use Eeyes\Common\Api\Eeyes\Permission;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Auth\Database\Role;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +14,7 @@ class AuthController extends Controller
     public function __construct()
     {
         phpCAS::client(CAS_VERSION_2_0, config('cas.host'), config('cas.port'), config('cas.context'));
-        if (config('app.debug')) {
-            phpCAS::setNoCasServerValidation();
-        }
+        phpCAS::setNoCasServerValidation();
     }
 
     public function login()

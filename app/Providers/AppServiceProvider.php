@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Eeyes\Common\EeyesCommon::config([
+            'API_URL' => env('EEYES_API_URL', ''),
+            'API_TOKEN' => env('EEYES_API_TOKEN', ''),
+            'IMG_URL' => env('EEYES_IMG_URL', ''),
+        ]);
     }
 
     /**
