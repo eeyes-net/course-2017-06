@@ -1,14 +1,18 @@
 @extends('web.layouts.master')
 
+@php
+    $title = '教师列表';
+@endphp
+
 @section('banner')
     <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column">
-                        <p class="title">
+                        <h1 class="title is-spaced">
                             教师
-                        </p>
+                        </h1>
                         <p class="subtitle">
                             Teachers of <em>Xi'an Jiao Tong University</em>.
                         </p>

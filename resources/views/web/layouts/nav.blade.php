@@ -79,7 +79,7 @@
                             <span class="icon"><img src="/images/logo/eeyes_icon.gif" alt="eeyes icon"></span>
                             e瞳网
                         </a>
-                        <a class="navbar-item" href="http://eux.eeyes.net/" target="_blank">
+                        <a class="navbar-item" href="https://eux.eeyes.net/" target="_blank">
                             <span class="icon"><img src="/images/logo/eux_icon.gif" alt="eux icon"></span>
                             e瞳前端用户体验中心
                         </a>

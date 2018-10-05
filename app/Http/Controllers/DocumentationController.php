@@ -24,9 +24,13 @@ class DocumentationController extends Controller
         if (!file_exists($file_path)) {
             abort(404);
         }
-        return view('documentation', [
-            'content' => static::parsedown($file_path),
-        ]);
+        $content = static::parsedown($file_path);
+        if (1 === preg_match('#<h1>(.*?)</h1>#su', $content, $matches)) {
+            $title = strip_tags($matches[1]);
+        } else {
+            $title = '';
+        }
+        return view('documentation', compact('title','content'));
     }
 
     public static function parsedown($file_path)

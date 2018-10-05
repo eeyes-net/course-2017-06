@@ -6,9 +6,9 @@
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column">
-                        <p class="title">
+                        <h1 class="title is-spaced">
                             分类：{{ $name }}
-                        </p>
+                        </h1>
                         <p class="subtitle">
                             Courses of <em>Xi'an Jiao Tong University</em>.
                         </p>

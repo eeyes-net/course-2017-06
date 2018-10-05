@@ -1,14 +1,18 @@
 @extends('web.layouts.master')
 
+@php
+    $title = '搜索结果：' . e($q);
+@endphp
+
 @section('banner')
     <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column">
-                        <p class="title">
+                        <h1 class="title is-spaced">
                             搜索结果：{{ $q }}
-                        </p>
+                        </h1>
                         <p class="subtitle">
                             Searching result.
                         </p>

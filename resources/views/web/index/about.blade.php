@@ -1,14 +1,18 @@
 @extends('web.layouts.master')
 
+@php
+    $title = '关于e学堂';
+@endphp
+
 @section('banner')
     <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column">
-                        <p class="title">
+                        <h1 class="title is-spaced">
                             关于e学堂
-                        </p>
+                        </h1>
                         <p class="subtitle">
                             About
                         </p>

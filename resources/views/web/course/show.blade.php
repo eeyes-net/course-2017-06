@@ -1,14 +1,18 @@
 @extends('web.layouts.master')
 
+@php
+    $title = '课程：' . e($data->title);
+@endphp
+
 @section('banner')
     <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column">
-                        <p class="title is-spaced">
+                        <h1 class="title is-spaced">
                             课程：{{ $data->title }}
-                        </p>
+                        </h1>
                         <p class="subtitle">
                             {{ $data->excerpt }}
                         </p>
