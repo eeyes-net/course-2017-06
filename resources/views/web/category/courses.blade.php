@@ -1,5 +1,9 @@
 @extends('web.layouts.master')
 
+@php
+    $title = '分类：' . e($name);
+@endphp
+
 @section('banner')
     <section class="hero is-info">
         <div class="hero-body">
